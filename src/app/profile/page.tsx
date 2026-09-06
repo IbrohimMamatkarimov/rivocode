@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Flame, Zap, Trophy, BookOpen, LogOut, LogIn, Globe, Mail, UserRound, type LucideIcon } from "lucide-react";
+import { Flame, Zap, Trophy, BookOpen, LogOut, Globe, Mail, LogIn, type LucideIcon } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { currentUser, profileStats, achievements } from "@/lib/mock-data";
+import { profileStats, achievements } from "@/lib/mock-data";
 import { ProfileCodeCard } from "@/components/profile/ProfileCodeCard";
 import { useAuth } from "@/components/auth/AuthProvider";
 
@@ -18,37 +18,21 @@ const achievementIcons: Record<string, LucideIcon> = {
   "book-open": BookOpen,
 };
 
-function firstNameFromEmail(email: string) {
-  const local = email.split("@")[0] ?? email;
-  const cleaned = local.replace(/[._-]+/g, " ").trim();
-  if (!cleaned) return null;
-  const first = cleaned.split(" ")[0];
-  return first.charAt(0).toUpperCase() + first.slice(1);
-}
-
 export default function ProfilePage() {
   const router = useRouter();
   const { status, account, logout } = useAuth();
-  const signedIn = status === "account";
 
-  // Only ever show the mock "Ibrohim" identity once someone has actually
-  // signed in — a logged-out visitor should see a generic guest state, not
-  // someone else's name and stats.
-  const displayName = signedIn
-    ? account?.name ?? (account?.email ? firstNameFromEmail(account.email) : null) ?? currentUser.name
-    : null;
-  const displayHandle = signedIn ? account?.email?.split("@")[0] ?? currentUser.handle : null;
-  const initials = signedIn
-    ? (displayName ?? currentUser.name)
-        .split(" ")
-        .map((part) => part[0])
-        .slice(0, 2)
-        .join("")
-        .toUpperCase()
-    : null;
+  const displayName = account?.name ?? account?.email?.split("@")[0] ?? "";
+  const initials =
+    displayName
+      .split(" ")
+      .map((part) => part[0])
+      .slice(0, 2)
+      .join("")
+      .toUpperCase() || "?";
 
-  const handleLogout = () => {
-    void logout();
+  const handleLogout = async () => {
+    await logout();
     router.push("/login");
   };
 
@@ -56,25 +40,30 @@ export default function ProfilePage() {
     <AppShell>
       <section className="hero-surface mb-7 overflow-hidden rounded-3xl border border-white/10 p-7 shadow-lg sm:p-8">
         <div className="relative flex flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
-          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-white/10 text-2xl font-bold text-white ring-1 ring-white/15">
-            {signedIn ? initials : <UserRound className="h-9 w-9 text-white/60" />}
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white/10 text-2xl font-bold text-white ring-1 ring-white/15">
+            {account?.picture ? (
+              // eslint-disable-next-line @next/next/no-img-element -- external Google profile photo, not a local/optimizable asset
+              <img src={account.picture} alt={displayName} className="h-full w-full object-cover" />
+            ) : (
+              initials
+            )}
           </div>
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent-2">Developer profile</p>
+            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent-2">
+              {status === "account" ? "Developer profile" : "Not signed in"}
+            </p>
             <h1 className="mt-1 text-[34px] font-bold tracking-[-0.05em] text-white">
-              {signedIn ? displayName : "You're browsing as a guest"}
+              {status === "account" ? displayName : "Guest"}
             </h1>
             <p className="mt-1 text-sm text-white/65">
-              {signedIn
-                ? `@${displayHandle} · Learning since ${currentUser.memberSince}`
-                : "Sign in to save progress and see your profile."}
+              {status === "account" ? account?.email : "Sign in to see your real progress and profile."}
             </p>
           </div>
         </div>
       </section>
 
       <Card className="mb-6 p-5 sm:p-6">
-        {signedIn ? (
+        {status === "account" ? (
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
@@ -95,15 +84,17 @@ export default function ProfilePage() {
         ) : (
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent-soft text-accent">
-                <UserRound className="h-5 w-5" />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-warning-soft text-warning">
+                <LogIn className="h-5 w-5" />
               </div>
               <div>
-                <p className="text-sm font-semibold text-foreground">Not signed in</p>
-                <p className="mt-0.5 text-[13px] text-muted">Create a free account to track your progress.</p>
+                <p className="text-sm font-semibold text-foreground">You're not signed in</p>
+                <p className="mt-0.5 text-[13px] text-muted">
+                  Sign in to save real progress across devices — what you see below is a preview.
+                </p>
               </div>
             </div>
-            <Link href={`/login?next=${encodeURIComponent("/profile")}`} className="shrink-0">
+            <Link href="/login" className="shrink-0">
               <Button>
                 <LogIn className="h-4 w-4" />
                 Sign in
@@ -113,11 +104,9 @@ export default function ProfilePage() {
         )}
       </Card>
 
-      {signedIn && (
-        <div className="mb-6">
-          <ProfileCodeCard />
-        </div>
-      )}
+      <div className="mb-6">
+        <ProfileCodeCard />
+      </div>
 
       <div className="mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <Card className="studio-panel p-5 text-center">
