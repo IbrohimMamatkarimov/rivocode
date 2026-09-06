@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Zap } from "lucide-react";
 
 interface Token {
   text: string;
@@ -13,17 +12,28 @@ interface CodeLine {
 }
 
 const LINES: CodeLine[] = [
+  { tokens: [{ text: "// RivoCode — learn by building", className: "code-comment" }] },
   { tokens: [{ text: "function ", className: "code-keyword" }, { text: "learnToCode", className: "code-function" }, { text: "() {" }] },
   { tokens: [{ text: "  const ", className: "code-keyword" }, { text: "you", className: "code-function" }, { text: " = " }, { text: '"ready"', className: "code-string" }, { text: ";" }] },
   { tokens: [{ text: "  const ", className: "code-keyword" }, { text: "skills", className: "code-function" }, { text: " = []" }, { text: ";" }] },
+  { tokens: [{ text: "  let ", className: "code-keyword" }, { text: "streak", className: "code-function" }, { text: " = " }, { text: "0", className: "code-number" }, { text: ";" }] },
   { tokens: [{ text: "" }] },
   { tokens: [{ text: "  while ", className: "code-keyword" }, { text: "(" }, { text: "you", className: "code-function" }, { text: " === " }, { text: '"ready"', className: "code-string" }, { text: ") {" }] },
   { tokens: [{ text: "    skills", className: "code-function" }, { text: "." }, { text: "push", className: "code-boolean" }, { text: "(" }, { text: "nextLesson", className: "code-function" }, { text: "()" }, { text: ");" }] },
-  { tokens: [{ text: "    streak", className: "code-function" }, { text: "++" }, { text: "; " }, { text: "// keep going", className: "code-comment" }] },
+  { tokens: [{ text: "    streak", className: "code-function" }, { text: "++" }, { text: "; " }, { text: "// one lesson at a time", className: "code-comment" }] },
+  { tokens: [{ text: "" }] },
+  { tokens: [{ text: "    if ", className: "code-keyword" }, { text: "(" }, { text: "streak", className: "code-function" }, { text: " % " }, { text: "7", className: "code-number" }, { text: " === " }, { text: "0", className: "code-number" }, { text: ") {" }] },
+  { tokens: [{ text: "      celebrate", className: "code-function" }, { text: "(" }, { text: '"7 day streak!"', className: "code-string" }, { text: ");" }] },
+  { tokens: [{ text: "    }" }] },
   { tokens: [{ text: "  }" }] },
+  { tokens: [{ text: "" }] },
+  { tokens: [{ text: "  const ", className: "code-keyword" }, { text: "languages", className: "code-function" }, { text: " = [" }, { text: '"JavaScript"', className: "code-string" }, { text: ", " }, { text: '"Python"', className: "code-string" }, { text: ", " }, { text: '"React"', className: "code-string" }, { text: "];" }] },
+  { tokens: [{ text: "  languages", className: "code-function" }, { text: "." }, { text: "forEach", className: "code-boolean" }, { text: "((" }, { text: "lang", className: "code-function" }, { text: ") => " }, { text: "master", className: "code-function" }, { text: "(" }, { text: "lang", className: "code-function" }, { text: "));" }] },
   { tokens: [{ text: "" }] },
   { tokens: [{ text: "  return ", className: "code-keyword" }, { text: '"Welcome to RivoCode"', className: "code-string" }, { text: ";" }] },
   { tokens: [{ text: "}" }] },
+  { tokens: [{ text: "" }] },
+  { tokens: [{ text: "learnToCode", className: "code-function" }, { text: "()" }, { text: ";" }] },
 ];
 
 const TYPE_SPEED_MS = 18;
@@ -91,32 +101,18 @@ function CodeTypewriterLines() {
 
 export function CodeTypewriter() {
   return (
-    <div>
-      <div className="login-code-window code-window motion-terminal overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
-        <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.04] px-4 py-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#f44336]/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#e7a917]/70" />
-          <span className="h-2.5 w-2.5 rounded-full bg-accent-2/70" />
-          <span className="ml-2 font-mono text-xs text-white/40">learn-to-code.js</span>
-        </div>
-        <pre className="code-print min-h-[220px] overflow-hidden px-5 py-5 font-mono text-[13px] leading-relaxed text-white/85">
-          <code>
-            <CodeTypewriterLines />
-          </code>
-        </pre>
+    <div className="login-code-window code-window motion-terminal overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+      <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.04] px-5 py-4">
+        <span className="h-3 w-3 rounded-full bg-[#f44336]/70" />
+        <span className="h-3 w-3 rounded-full bg-[#e7a917]/70" />
+        <span className="h-3 w-3 rounded-full bg-accent-2/70" />
+        <span className="ml-2 font-mono text-sm text-white/40">learn-to-code.js</span>
       </div>
-
-      <div className="mt-5 flex items-center gap-3">
-        <div className="developer-stack">
-          <span className="developer-avatar developer-avatar-one">IB</span>
-          <span className="developer-avatar developer-avatar-two">AK</span>
-          <span className="developer-avatar developer-avatar-three">+8</span>
-          <span className="developer-orbit">
-            <Zap className="h-2.5 w-2.5" fill="currentColor" />
-          </span>
-        </div>
-        <p className="text-xs text-white/50">Learners building real projects, every day.</p>
-      </div>
+      <pre className="code-print min-h-[440px] overflow-hidden px-7 py-7 font-mono text-[16px] leading-[1.7] text-white/85">
+        <code>
+          <CodeTypewriterLines />
+        </code>
+      </pre>
     </div>
   );
 }

@@ -8,6 +8,7 @@ import { BrandMark } from "@/components/layout/BrandMark";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/components/theme/LanguageProvider";
 import { CodeTypewriter } from "@/components/login/CodeTypewriter";
+import { AuthLoadingLabel } from "@/components/login/AuthLoadingLabel";
 
 function GoogleGlyph() {
   return (
@@ -90,7 +91,7 @@ export default function LoginPage() {
           <BrandMark label inverse className="text-accent-2" />
         </div>
 
-        <div className="relative max-w-md">
+        <div className="relative max-w-xl">
           <p className="mb-3 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-accent-2 backdrop-blur">
             <Sparkles className="h-3 w-3" />
             {t("login_hero_badge")}
@@ -148,7 +149,7 @@ export default function LoginPage() {
             className="mt-6 flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-surface text-sm font-semibold text-foreground shadow-sm transition-colors hover:bg-surface-raised disabled:opacity-60"
           >
             <GoogleGlyph />
-            {t("login_continue_google")}
+            {googleLoading ? <AuthLoadingLabel label="Connecting" /> : t("login_continue_google")}
           </button>
 
           <div className="my-5 flex items-center gap-3 text-xs font-medium uppercase tracking-wide text-muted-2">
@@ -188,7 +189,13 @@ export default function LoginPage() {
               />
             </div>
             <Button type="submit" size="lg" disabled={submitting} className="mt-1 w-full justify-center">
-              {submitting ? "…" : mode === "signin" ? t("btn_sign_in") : t("btn_create_account_submit")}
+              {submitting ? (
+                <AuthLoadingLabel label={mode === "signin" ? "Signing in" : "Creating account"} />
+              ) : mode === "signin" ? (
+                t("btn_sign_in")
+              ) : (
+                t("btn_create_account_submit")
+              )}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </form>
