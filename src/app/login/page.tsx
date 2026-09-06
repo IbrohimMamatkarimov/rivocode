@@ -7,6 +7,7 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/components/theme/LanguageProvider";
+import { CodeTypewriter } from "@/components/login/CodeTypewriter";
 
 function GoogleGlyph() {
   return (
@@ -80,9 +81,10 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background lg:grid lg:grid-cols-2">
-      <div className="hero-surface relative hidden flex-col justify-between overflow-hidden p-10 lg:flex">
-        <div className="hero-glow -right-16 -top-16 h-72 w-72 bg-accent/25" />
-        <div className="hero-glow -bottom-24 left-10 h-64 w-64 bg-violet/20" />
+      <div className="hero-surface login-surface relative hidden flex-col justify-between overflow-hidden p-10 lg:flex">
+        <div className="login-scanline" />
+        <div className="hero-glow login-orb -right-16 -top-16 h-72 w-72 bg-accent/25" />
+        <div className="hero-glow login-orb-slow -bottom-24 left-10 h-64 w-64 bg-violet/20" />
 
         <div className="relative">
           <BrandMark label inverse className="text-accent-2" />
@@ -95,6 +97,10 @@ export default function LoginPage() {
           </p>
           <h1 className="text-[34px] font-bold leading-[1.1] tracking-tight text-white">{t("login_hero_title")}</h1>
           <p className="mt-4 text-[15px] leading-relaxed text-white/65">{t("login_hero_subtitle")}</p>
+
+          <div className="relative mt-8">
+            <CodeTypewriter />
+          </div>
         </div>
 
         <p className="relative text-xs text-white/40">© {new Date().getFullYear()} RivoCode</p>
