@@ -5,6 +5,7 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { LanguageLogo } from "@/lib/language-logos";
 import { cn } from "@/lib/utils";
 import type { Course } from "@/lib/types";
+import { useLanguage, translateDifficulty } from "@/components/theme/LanguageProvider";
 
 const categoryGradient: Record<string, string> = {
   "Web Development": "from-accent-3 via-accent to-accent-2",
@@ -21,6 +22,7 @@ function formatStudents(n?: number) {
 }
 
 export function CourseCard({ course }: { course: Course }) {
+  const { t } = useLanguage();
   const started = course.progress > 0;
   const gradient = categoryGradient[course.category] ?? "from-accent-3 to-accent";
 
@@ -44,12 +46,12 @@ export function CourseCard({ course }: { course: Course }) {
         />
         <div className="relative ml-auto flex flex-col items-end gap-1.5">
           <span className="rounded-full border border-white/30 bg-white/15 px-2.5 py-0.5 text-xs font-semibold text-white backdrop-blur">
-            {course.difficulty}
+            {translateDifficulty(t, course.difficulty)}
           </span>
           {course.videoId && (
             <span className="flex items-center gap-1 rounded-full bg-black/30 px-2 py-0.5 text-[11px] font-medium text-white backdrop-blur">
               <PlayCircle className="h-3 w-3" />
-              Video lessons
+              {t("video_lessons_badge")}
             </span>
           )}
         </div>
@@ -78,7 +80,7 @@ export function CourseCard({ course }: { course: Course }) {
         {started && (
           <>
             <div className="mt-3 flex items-center justify-between text-xs text-muted">
-              <span>Your progress</span>
+              <span>{t("label_your_progress")}</span>
               <span className="font-semibold text-foreground">{course.progress}%</span>
             </div>
             <ProgressBar value={course.progress} className="mt-2" size="sm" gradient />
@@ -89,7 +91,7 @@ export function CourseCard({ course }: { course: Course }) {
           href={`/courses/${course.slug}`}
           className="mt-5 inline-flex items-center justify-center gap-1.5 rounded-xl bg-accent px-4 py-2.5 text-[13px] font-semibold text-white shadow-sm shadow-accent/20 transition-all hover:bg-accent-hover"
         >
-          {started ? "Continue Learning" : "Start Learning"}
+          {started ? t("btn_continue_learning") : t("btn_start_learning")}
           <ArrowRight className="h-3.5 w-3.5" />
         </Link>
       </div>

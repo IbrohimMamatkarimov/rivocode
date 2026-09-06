@@ -6,6 +6,7 @@ import { ArrowRight, ArrowLeft, Braces, CheckCircle2, CircleAlert, Code2, Sparkl
 import { useAuth } from "@/components/auth/AuthProvider";
 import { BrandMark } from "@/components/layout/BrandMark";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/components/theme/LanguageProvider";
 
 function GoogleGlyph() {
   return (
@@ -19,6 +20,7 @@ function GoogleGlyph() {
 }
 
 export default function LoginPage() {
+  const { t } = useLanguage();
   const router = useRouter();
   const { signInWithGoogle, signInWithEmail, signUpWithEmail, configured } = useAuth();
   const [email, setEmail] = useState("");
@@ -58,7 +60,7 @@ export default function LoginPage() {
     setBusy(false);
     if (result.error) return setError(result.error);
     if (result.needsEmailConfirmation) {
-      setNotice("Check your inbox to confirm your email, then return here to sign in.");
+      setNotice(t("login_email_confirm"));
       return;
     }
     goDashboard();
@@ -130,7 +132,7 @@ export default function LoginPage() {
             className="mb-6 inline-flex items-center gap-1.5 text-sm font-semibold text-muted transition-colors hover:text-accent"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back
+            {t("login_back")}
           </button>
 
           <div className="mb-6 lg:hidden">
@@ -151,13 +153,13 @@ export default function LoginPage() {
 
           <div className="mb-7 rounded-2xl border border-border bg-surface-raised px-4 py-3 font-mono shadow-sm">
             <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.14em] text-accent"><Terminal className="h-3.5 w-3.5" /> auth.output</div>
-            <p className="mt-2 text-sm leading-6 text-foreground"><span className="text-accent">{">"}</span> {mode === "signin" ? "identity.check()  // welcome back, builder" : "identity.create() // initialize your workspace"}</p>
+            <p className="mt-2 text-sm leading-6 text-foreground"><span className="text-accent">{">"}</span> {mode === "signin" ? t("login_identity_check") : t("login_identity_create")}</p>
           </div>
           <h2 className="text-2xl font-bold tracking-tight text-foreground">
-            {mode === "signin" ? "Ready when you are." : "Let&apos;s build your future."}
+            {mode === "signin" ? t("login_ready") : t("login_build_future")}
           </h2>
           <p className="mt-1.5 text-sm text-muted">
-            {mode === "signin" ? "Your next project is waiting in the workspace." : "Your workspace is where ideas become working code."}
+            {mode === "signin" ? t("login_next_project") : t("login_workspace_idea")}
           </p>
 
           <button
@@ -167,19 +169,19 @@ export default function LoginPage() {
             className="mt-6 flex h-11 w-full items-center justify-center gap-2.5 rounded-xl border border-border bg-surface text-sm font-semibold text-foreground shadow-sm transition-colors hover:bg-surface-raised disabled:cursor-not-allowed disabled:opacity-50"
           >
             <GoogleGlyph />
-            Continue with Google
+            {t("login_continue_google")}
           </button>
 
           <div className="my-5 flex items-center gap-3 text-xs font-medium uppercase tracking-wide text-muted-2">
             <span className="h-px flex-1 bg-border" />
-            or continue with email
+            {mode === "signin" ? t("login_or_signin_email") : t("login_or_signup_email")}
             <span className="h-px flex-1 bg-border" />
           </div>
 
           <form onSubmit={(event) => void handleEmailSubmit(event)} className="space-y-3">
             <div>
               <label className="mb-1.5 block text-xs font-semibold text-muted" htmlFor="email">
-                Email address
+                {t("label_email")}
               </label>
               <input
                 id="email"
@@ -193,7 +195,7 @@ export default function LoginPage() {
             </div>
             <div>
               <label className="mb-1.5 block text-xs font-semibold text-muted" htmlFor="password">
-                Password
+                {t("label_password")}
               </label>
               <input
                 id="password"
@@ -207,7 +209,7 @@ export default function LoginPage() {
               />
             </div>
             <Button type="submit" size="lg" className="mt-1 w-full justify-center" disabled={busy || !configured}>
-              {busy ? "Connecting…" : mode === "signin" ? "Enter workspace" : "Create workspace"}
+              {busy ? t("login_connecting") : mode === "signin" ? t("login_enter_workspace") : t("login_create_workspace")}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </form>
@@ -217,13 +219,13 @@ export default function LoginPage() {
           {notice && <p className="mt-4 rounded-xl border border-success/25 bg-success-soft p-3 text-sm text-success">{notice}</p>}
 
           <p className="mt-4 text-center text-sm text-muted">
-            {mode === "signin" ? "New to RivoCode?" : "Already have a workspace?"}{" "}
+            {mode === "signin" ? t("new_to_rivocode") : t("already_have_account")}{" "}
             <button
               type="button"
               onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
               className="font-semibold text-accent hover:text-accent-hover"
             >
-              {mode === "signin" ? "Create a workspace" : "Sign in"}
+              {mode === "signin" ? t("link_create_account") : t("link_sign_in")}
             </button>
           </p>
         </div>

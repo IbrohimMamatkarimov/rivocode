@@ -24,7 +24,7 @@ export function ProgressBar({ value, className, trackClassName, size = "md", gra
     >
       <div
         className={cn(
-          "h-full rounded-full transition-[width] duration-700 ease-out",
+          "progress-flow h-full rounded-full transition-[width] duration-700 ease-out",
           gradient ? "bg-gradient-to-r from-accent-3 via-accent to-accent-2" : "bg-accent",
           className
         )}

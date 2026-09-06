@@ -1,3 +1,5 @@
+"use client";
+
 import { CheckCircle2, Clock, Flame, FolderKanban } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { StatCard } from "@/components/dashboard/StatCard";
@@ -7,8 +9,10 @@ import { LanguagePicker } from "@/components/dashboard/LanguagePicker";
 import { DashboardHero } from "@/components/dashboard/DashboardHero";
 import { FeaturedChallenge } from "@/components/dashboard/FeaturedChallenge";
 import { dashboardStats, continueLearning, learningPath } from "@/lib/mock-data";
+import { useLanguage } from "@/components/theme/LanguageProvider";
 
 export default function DashboardPage() {
+  const { t } = useLanguage();
   return (
     <AppShell>
       <div className="dashboard-hero-enter"><DashboardHero /></div>
@@ -18,10 +22,10 @@ export default function DashboardPage() {
       </section>
 
       <div className="dashboard-section dashboard-delay-2 motion-stagger mb-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard icon={Flame} value={String(dashboardStats.streakDays)} label="Day streak" tone="warning" trend="+2 this week" />
-        <StatCard icon={Clock} value={String(dashboardStats.hoursLearned)} label="Hours learned" tone="accent" />
-        <StatCard icon={CheckCircle2} value={String(dashboardStats.problemsSolved)} label="Problems solved" tone="blue" trend="+9 this week" />
-        <StatCard icon={FolderKanban} value={String(dashboardStats.projectsCompleted)} label="Projects" tone="violet" />
+        <StatCard icon={Flame} value={String(dashboardStats.streakDays)} label={t("stat_streak")} tone="warning" trend={`+2 ${t("current_week")}`} />
+        <StatCard icon={Clock} value={String(dashboardStats.hoursLearned)} label={t("stat_hours")} tone="accent" />
+        <StatCard icon={CheckCircle2} value={String(dashboardStats.problemsSolved)} label={t("stat_problems")} tone="blue" trend={`+9 ${t("current_week")}`} />
+        <StatCard icon={FolderKanban} value={String(dashboardStats.projectsCompleted)} label={t("stat_projects")} tone="violet" />
       </div>
 
       <div className="dashboard-section dashboard-delay-3 mb-8">

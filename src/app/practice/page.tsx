@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { Search, X, Zap } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { AppShell } from "@/components/layout/AppShell";
@@ -14,16 +14,12 @@ import { useLanguage, translateDifficulty } from "@/components/theme/LanguagePro
 const tracks = ["All", "JavaScript", "Python", "React", "HTML/CSS"] as const;
 const difficulties = ["All", "Easy", "Medium", "Hard"] as const;
 
-export default function PracticePage() {
+function PracticeWorkspace() {
   const { t } = useLanguage();
   const searchParams = useSearchParams();
   const [track, setTrack] = useState<(typeof tracks)[number]>("All");
   const [difficulty, setDifficulty] = useState<(typeof difficulties)[number]>("All");
   const [query, setQuery] = useState(searchParams.get("query") ?? "");
-
-  useEffect(() => {
-    setQuery(searchParams.get("query") ?? "");
-  }, [searchParams]);
 
   const filtered = useMemo(() => {
     return challenges.filter((c) => {
@@ -51,19 +47,19 @@ export default function PracticePage() {
       </PageHero>
 
       <div className="mb-3 flex flex-wrap gap-2">
-        {tracks.map((t) => (
+        {tracks.map((trackOption) => (
           <button
-            key={t}
-            onClick={() => setTrack(t)}
-            aria-pressed={track === t}
+            key={trackOption}
+            onClick={() => setTrack(trackOption)}
+            aria-pressed={track === trackOption}
             className={cn(
               "rounded-xl border px-3.5 py-2 text-[13px] font-semibold transition-colors",
-              track === t
+              track === trackOption
                 ? "border-accent bg-accent text-white shadow-sm"
                 : "border-border bg-surface text-muted hover:border-accent-soft-strong hover:text-foreground"
             )}
           >
-            {t}
+            {trackOption === "All" ? t("cat_all") : trackOption}
           </button>
         ))}
       </div>
@@ -107,5 +103,13 @@ export default function PracticePage() {
         />
       )}
     </AppShell>
+  );
+}
+
+export default function PracticePage() {
+  return (
+    <Suspense fallback={<div className="h-72 animate-pulse rounded-3xl border border-border bg-surface" />}>
+      <PracticeWorkspace />
+    </Suspense>
   );
 }

@@ -7,17 +7,19 @@ import { Badge } from "@/components/ui/Badge";
 import { LanguageLogo } from "@/lib/language-logos";
 import { getCourseBySlug } from "@/lib/mock-data";
 import type { LearningPathItem } from "@/lib/types";
+import { useLanguage } from "@/components/theme/LanguageProvider";
 
 export function LearningPath({ items }: { items: LearningPathItem[] }) {
+  const { t } = useLanguage();
   return (
     <section>
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-bold tracking-tight text-foreground">Your Learning Path</h2>
+        <h2 className="text-lg font-bold tracking-tight text-foreground">{t("learning_path")}</h2>
         <Link
           href="/learn"
           className="flex items-center gap-1 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
         >
-          View all
+          {t("btn_view_all")}
           <ArrowRight className="h-3.5 w-3.5" />
         </Link>
       </div>
@@ -49,13 +51,13 @@ export function LearningPath({ items }: { items: LearningPathItem[] }) {
                 {item.started ? (
                   <>
                     <div className="flex items-center justify-between text-xs text-muted">
-                      <span>{item.progress}% complete</span>
-                      <span>{item.totalLessons} lessons</span>
+                      <span>{item.progress}% {t("lessons_complete")}</span>
+                      <span>{item.totalLessons} {t("lessons_suffix")}</span>
                     </div>
                     <ProgressBar value={item.progress} className="mt-2" size="sm" gradient />
                   </>
                 ) : (
-                  <p className="text-xs text-muted-2">Not started · {item.totalLessons} lessons</p>
+                  <p className="text-xs text-muted-2">{t("not_started_label")} · {item.totalLessons} {t("lessons_suffix")}</p>
                 )}
               </div>
 
@@ -63,7 +65,7 @@ export function LearningPath({ items }: { items: LearningPathItem[] }) {
                 href={href}
                 className="mt-4 flex items-center gap-1 text-sm font-semibold text-accent transition-colors hover:text-accent-hover"
               >
-                {item.started ? "Continue" : "Start course"}
+                {item.started ? t("btn_continue") : t("btn_start_course")}
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </Card>

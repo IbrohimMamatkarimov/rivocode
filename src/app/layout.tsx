@@ -5,7 +5,7 @@ import { AuthProvider } from "@/components/auth/AuthProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "RivoCode — Learn to code. Build real skills.",
+  title: "RivoCode",
   description:
     "RivoCode is a focused platform for learning programming through short lessons, hands-on practice, and real projects.",
   icons: {

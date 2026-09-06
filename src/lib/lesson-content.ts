@@ -2806,6 +2806,22 @@ function fallbackCode(language: string, sectionTitle: string, phase: string) {
   return `// ${label}: ${phase}\nconst checkpoint = "change one input, then inspect the result";\nconsole.log(checkpoint);`;
 }
 
+function commentPrefix(language: string) {
+  if (language === "python" || language === "bash") return "#";
+  if (language === "sql") return "--";
+  if (language === "html") return "<!--";
+  return "//";
+}
+
+function variationCode(language: string, sectionTitle: string) {
+  const topic = sectionTitle.replace(/[^a-zA-Z0-9]/g, " ").trim();
+  if (language === "python") return `def inspect_${topic.toLowerCase().replaceAll(" ", "_")}(value):\n    return {"input": value, "type": type(value).__name__}\n\nprint(inspect_${topic.toLowerCase().replaceAll(" ", "_")}(42))`;
+  if (language === "html") return `<article class="${topic.toLowerCase().replaceAll(" ", "-")}-demo">\n  <h2>Change one thing</h2>\n  <p>Then inspect the browser result.</p>\n</article>`;
+  if (language === "sql") return `select\n  '${topic}' as topic,\n  'inspect one result' as next_step;`;
+  if (language === "jsx") return `export function ${topic.replaceAll(" ", "")}Checkpoint() {\n  const step = "change one input";\n  return <p>{step}</p>;\n}`;
+  return `const topic = "${topic}";\nconst inputs = ["first", "second"];\n\nfor (const input of inputs) {\n  console.log({ topic, input });\n}`;
+}
+
 function fallbackContent(courseId: string, sectionTitle: string, partIndex: number, lessonTitle: string): LessonContentBlock {
   const language = courseLanguage[courseId] ?? "javascript";
   const phase = lessonPhases[Math.min(partIndex, lessonPhases.length - 1)];
@@ -2813,20 +2829,26 @@ function fallbackContent(courseId: string, sectionTitle: string, partIndex: numb
   return {
     heading: `${lessonTitle}: ${phase.title}`,
     explanation:
-      `This is the ${phase.title.toLowerCase()} part of ${sectionTitle}. The goal is not to memorize syntax; it is to make a small, testable decision and explain why it works. That is the habit that turns a beginner exercise into dependable code.\n\nIn this course, ${sectionTitle} supports ${focus}. Start with the smallest version you can describe in one sentence. Run it, inspect the result, and only then add a second condition, value, element, or file. Small feedback loops are faster than writing a large solution and hoping it works.\n\n${phase.goal} Keep a short note of what changed, what you expected, and what actually happened. Professional developers work this way every day: they reduce uncertainty with evidence, not intuition.`,
-    syntax: `Practice loop\n1. Predict the result\n2. Build the smallest example\n3. Run or inspect it\n4. Change one input\n5. Explain the difference`,
+      `This lesson develops ${sectionTitle} through a deliberate, test-first workflow. Rather than collecting syntax by memory, you will make a prediction, write a small program, inspect the result, and explain the behavior in your own words. That loop is how a short tutorial becomes a durable skill.\n\n${sectionTitle} supports ${focus}. Begin with the smallest example that demonstrates one rule. Give names to the inputs, decide what output you expect, and only then run it. If the output surprises you, that is useful evidence—not a failure.\n\n${phase.goal} Work in small changes: edit one value, one condition, one selector, or one line at a time. A fast feedback loop is more valuable than a large solution you cannot explain.\n\nAs you work, ask three engineering questions: What does this code receive? What does it produce? What assumption would break first if a real user gave unusual input? Those questions scale from beginner exercises to production code.\n\nBefore moving on, write a one-sentence summary of the rule you learned and keep the final version of your example. Tiny, verified examples become a personal reference library you can reuse in later projects.`,
+    syntax: `Reliable practice loop\n1. Predict the output before running\n2. Build one minimal example\n3. Run or preview it\n4. Change exactly one input\n5. Compare expectation with evidence\n6. Explain the rule in one sentence`,
     codeExample: fallbackCode(language, sectionTitle, phase.title),
     language,
     examples: [
       {
-        heading: "Debug checkpoint",
-        code: `// Before changing more code, answer:\n// 1. What input am I testing?\n// 2. What result do I expect?\n// 3. What evidence proves it?`,
+        heading: "Inspect one variation",
+        code: variationCode(language, sectionTitle),
         language,
-        note: "If the result surprises you, reduce the example until only one behavior is left. That is your real lesson.",
+        note: "Run this version, then alter only one input. Compare the new result with your prediction before you make another change.",
+      },
+      {
+        heading: "Debug checkpoint",
+        code: `${commentPrefix(language)} Before changing more code, answer:\n${commentPrefix(language)} 1. What input am I testing?\n${commentPrefix(language)} 2. What result do I expect?\n${commentPrefix(language)} 3. What evidence proves it?\n${commentPrefix(language)} 4. What edge case should I try next?`,
+        language,
+        note: "If the result surprises you, reduce the example until only one behavior is left. That smaller behavior is the real lesson.",
       },
     ],
-    note: "A polished solution is usually a sequence of small verified steps, not one clever jump. Optimize for clarity first; optimize for speed only after you can measure it.",
-    exercisePrompt: `Create a tiny ${sectionTitle} example for a real scenario you care about. Complete the five-step practice loop above, then write one sentence explaining the trade-off in your solution.`,
+    note: "A polished solution is usually a sequence of small verified steps, not one clever jump. Optimize for clarity first; optimize for speed only after you can measure it. Keep your names descriptive enough that another developer can understand your intent without reading every line.",
+    exercisePrompt: `Build a small ${sectionTitle} example for a real scenario you care about. First make the simplest version work. Then add one realistic variation, test an unusual input or state, and write a comment that explains the design choice you made.`,
   };
 }
 

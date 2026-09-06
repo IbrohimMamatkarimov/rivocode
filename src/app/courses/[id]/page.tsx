@@ -23,7 +23,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
 
   return (
     <AppShell>
-      <div className="hero-surface relative mb-8 overflow-hidden rounded-2xl">
+      <div className="hero-surface course-detail-hero relative mb-8 overflow-hidden rounded-2xl">
         <div className="hero-glow -right-20 -top-20 h-64 w-64 bg-accent/30" />
         <div className="relative grid grid-cols-1 gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_360px] lg:items-center">
           <div>
@@ -75,12 +75,12 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
           {course.videoId && (
             <Link
               href={`/lessons/${firstLesson?.id ?? ""}`}
-              className="group relative block aspect-video overflow-hidden rounded-xl border border-white/10 shadow-lg"
+              className="course-video group relative block aspect-video overflow-hidden rounded-xl border border-white/10 shadow-lg"
             >
               <img
                 src={`https://img.youtube.com/vi/${course.videoId}/hqdefault.jpg`}
                 alt={`${course.title} preview`}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                className="course-video-image absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center">

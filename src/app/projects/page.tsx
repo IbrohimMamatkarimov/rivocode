@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { FolderKanban, Search, X } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
@@ -8,14 +8,12 @@ import { ProjectCard } from "@/components/projects/ProjectCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { PageHero } from "@/components/ui/PageHero";
 import { projects } from "@/lib/mock-data";
+import { useLanguage } from "@/components/theme/LanguageProvider";
 
-export default function ProjectsPage() {
+function ProjectsWorkspace() {
+  const { t } = useLanguage();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("query") ?? "");
-
-  useEffect(() => {
-    setQuery(searchParams.get("query") ?? "");
-  }, [searchParams]);
 
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -26,16 +24,16 @@ export default function ProjectsPage() {
   return (
     <AppShell>
       <PageHero
-        eyebrow="The project bench"
+        eyebrow={t("projects_eyebrow")}
         icon={FolderKanban}
-        title="Turn lessons into proof."
-        description="Well-scoped briefs that help you practice decisions, not just syntax. Choose one and build it in your own style."
-        stats={[{ label: "Briefs", value: String(projects.length) }, { label: "Skill levels", value: "3" }]}
+        title={t("projects_title")}
+        description={t("projects_description")}
+        stats={[{ label: t("stat_briefs_label"), value: String(projects.length) }, { label: t("stat_skill_levels_label"), value: "3" }]}
       >
         <div className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-4 py-3 backdrop-blur sm:max-w-md">
           <Search className="h-4 w-4 text-white/60" />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search project briefs..." aria-label="Search project briefs" className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/50" />
-          {query && <button type="button" onClick={() => setQuery("")} className="text-white/60 hover:text-white" aria-label="Clear project search"><X className="h-4 w-4" /></button>}
+          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={t("projects_search_placeholder")} aria-label={t("projects_search_placeholder")} className="w-full bg-transparent text-sm text-white outline-none placeholder:text-white/50" />
+          {query && <button type="button" onClick={() => setQuery("")} className="text-white/60 hover:text-white" aria-label={t("btn_clear_search")}><X className="h-4 w-4" /></button>}
         </div>
       </PageHero>
 
@@ -45,7 +43,15 @@ export default function ProjectsPage() {
           <ProjectCard key={project.id} project={project} />
         ))}
         </div>
-      ) : <EmptyState icon={FolderKanban} title="No project briefs found" description="Try a different technology, level, or title." actionLabel="Clear search" onAction={() => setQuery("")} />}
+      ) : <EmptyState icon={FolderKanban} title={t("empty_projects_title")} description={t("empty_projects_desc")} actionLabel={t("btn_clear_search")} onAction={() => setQuery("")} />}
     </AppShell>
+  );
+}
+
+export default function ProjectsPage() {
+  return (
+    <Suspense fallback={<div className="h-72 animate-pulse rounded-3xl border border-border bg-surface" />}>
+      <ProjectsWorkspace />
+    </Suspense>
   );
 }

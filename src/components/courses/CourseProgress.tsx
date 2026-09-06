@@ -1,6 +1,9 @@
+"use client";
+
 import { CheckCircle2 } from "lucide-react";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { RadialProgress } from "@/components/ui/RadialProgress";
+import { useLanguage } from "@/components/theme/LanguageProvider";
 
 export function CourseProgress({
   completedLessons,
@@ -11,6 +14,7 @@ export function CourseProgress({
   totalLessons: number;
   progress: number;
 }) {
+  const { t } = useLanguage();
   return (
     <div className="flex items-center gap-5">
       <RadialProgress
@@ -22,7 +26,7 @@ export function CourseProgress({
       <div className="flex-1">
         <div className="mb-2 flex items-center gap-1.5 text-sm font-medium text-foreground">
           <CheckCircle2 className="h-4 w-4 text-success" />
-          {completedLessons} / {totalLessons} lessons completed
+          {completedLessons} / {totalLessons} {t("lessons_suffix")} {t("lessons_complete")}
         </div>
         <ProgressBar value={progress} gradient />
       </div>

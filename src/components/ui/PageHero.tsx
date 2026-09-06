@@ -14,7 +14,7 @@ interface PageHeroProps {
 
 export function PageHero({ eyebrow, title, description, icon: Icon, stats, children, className }: PageHeroProps) {
   return (
-    <div className={cn("hero-surface studio-panel mb-8 rounded-3xl border border-white/10 px-6 py-7 shadow-lg sm:px-8 sm:py-9", className)}>
+    <div className={cn("hero-surface studio-panel code-hero mb-8 rounded-3xl border border-white/10 px-6 py-7 shadow-lg sm:px-8 sm:py-9", className)}>
       <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
           {eyebrow && (
@@ -37,7 +37,7 @@ export function PageHero({ eyebrow, title, description, icon: Icon, stats, child
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="min-w-24 rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-center backdrop-blur"
+                className="hero-stat min-w-24 rounded-2xl border border-white/10 bg-white/[0.08] px-4 py-3 text-center backdrop-blur"
               >
                 <p className="text-xl font-bold text-white">{stat.value}</p>
                 <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-white/52">{stat.label}</p>

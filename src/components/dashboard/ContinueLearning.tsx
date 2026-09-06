@@ -5,6 +5,7 @@ import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Button } from "@/components/ui/Button";
 import { LanguageLogo } from "@/lib/language-logos";
 import { getCourseBySlug } from "@/lib/mock-data";
+import { useLanguage } from "@/components/theme/LanguageProvider";
 
 export function ContinueLearning({
   courseId,
@@ -15,6 +16,7 @@ export function ContinueLearning({
   lessonTitle: string;
   progress: number;
 }) {
+  const { t } = useLanguage();
   const course = getCourseBySlug(courseId);
   const nextLesson = course?.sections
     .flatMap((s) => s.lessons)
@@ -41,7 +43,7 @@ export function ContinueLearning({
           </div>
           <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur">
             <Sparkles className="h-3 w-3 text-accent-2" />
-            Continue watching
+            {t("continue_watching")}
           </span>
         </div>
 
@@ -49,8 +51,8 @@ export function ContinueLearning({
           <div className="flex items-start gap-3">
             <LanguageLogo courseId={courseId} className="h-10 w-10 shrink-0 shadow-sm" />
             <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-2">Continue learning</p>
-              <h2 className="mt-0.5 text-lg font-semibold text-foreground">{course?.title ?? "Your course"}</h2>
+              <p className="text-xs font-semibold uppercase tracking-wide text-muted-2">{t("continue_learning_label")}</p>
+              <h2 className="mt-0.5 text-lg font-semibold text-foreground">{course?.title ?? t("your_course")}</h2>
               <p className="mt-0.5 text-sm text-muted">{lessonTitle}</p>
             </div>
           </div>
@@ -64,7 +66,7 @@ export function ContinueLearning({
 
           <Link href={nextLesson ? `/lessons/${nextLesson.id}` : `/courses/${courseId}`} className="w-fit">
             <Button>
-              Continue Learning
+              {t("btn_continue_learning")}
               <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
