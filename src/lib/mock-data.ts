@@ -8,13 +8,6 @@ import type {
   WeekActivity,
 } from "./types";
 
-export const currentUser = {
-  name: "Ibrohim",
-  handle: "ibrohim.dev",
-  memberSince: "2026",
-  avatarInitials: "IB",
-};
-
 export const dashboardStats = {
   streakDays: 0,
   hoursLearned: 0,

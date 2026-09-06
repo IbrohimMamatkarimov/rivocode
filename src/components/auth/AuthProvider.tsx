@@ -8,10 +8,12 @@ export type AuthMethod = "google" | "rivocode";
 export type AuthStatus = "loading" | "account" | "unauthenticated";
 
 export interface AccountInfo {
+  id: string;
   email: string;
   provider: AuthMethod;
   name?: string;
   picture?: string;
+  createdAt?: string;
 }
 
 interface AuthContextValue {
@@ -32,11 +34,36 @@ function toAccountInfo(user: User): AccountInfo {
   const name = (meta.full_name as string | undefined) ?? (meta.name as string | undefined);
   const picture = (meta.avatar_url as string | undefined) ?? (meta.picture as string | undefined);
   return {
+    id: user.id,
     email: user.email ?? "",
     provider,
-    name,
+    name: name?.trim() || undefined,
     picture,
+    createdAt: user.created_at,
   };
+}
+
+export function accountDisplayName(account: AccountInfo | null | undefined) {
+  const name = account?.name?.trim();
+  if (name) return name;
+  const local = account?.email.split("@")[0]?.replace(/[._-]+/g, " ").trim();
+  if (local) return local.replace(/\b\w/g, (letter) => letter.toUpperCase());
+  return "Developer";
+}
+
+export function accountHandle(account: AccountInfo | null | undefined) {
+  const local = account?.email.split("@")[0]?.replace(/[^a-zA-Z0-9_-]/g, "").toLowerCase();
+  return local || "developer";
+}
+
+export function accountInitials(account: AccountInfo | null | undefined) {
+  return accountDisplayName(account)
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase() || "?";
 }
 
 const NOT_CONFIGURED_MESSAGE = "Sign-in isn't set up yet — add your Supabase keys to .env.local.";

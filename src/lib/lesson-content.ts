@@ -220,7 +220,7 @@ const javascriptFundamentals: SectionContent = {
       heading: "Declaring Functions",
       explanation:
         "Functions bundle reusable logic. Define one with the function keyword, then call it any number of times.\n\nWriting the same logic as a function instead of copy-pasting it everywhere means you only have to fix a bug, or change the behavior, in one place.",
-      codeExample: 'function greet(name) {\n  return "Hello, " + name + "!";\n}\nconsole.log(greet("Ibrohim"));',
+      codeExample: 'function greet(name) {\n  return "Hello, " + name + "!";\n}\nconsole.log(greet("Rivo"));',
       language: "javascript",
       syntax: "function functionName(parameter1, parameter2) {\n  // code\n  return value;\n}",
       examples: [
@@ -1384,7 +1384,7 @@ const pythonBasics: SectionContent = {
       heading: "Defining Functions",
       explanation:
         "Functions are defined with def, and Python uses indentation to mark what is inside the function body.\n\nA function without an explicit return statement returns None automatically, the same way JavaScript functions return undefined by default.",
-      codeExample: 'def greet(name):\n    return f"Hello, {name}!"\n\nprint(greet("Ibrohim"))',
+      codeExample: 'def greet(name):\n    return f"Hello, {name}!"\n\nprint(greet("Rivo"))',
       language: "python",
       syntax: "def function_name(parameter):\n    # code\n    return value",
       exercisePrompt: "Write a function square(n) that returns n squared.",

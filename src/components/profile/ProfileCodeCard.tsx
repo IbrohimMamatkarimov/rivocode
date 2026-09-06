@@ -1,6 +1,6 @@
 "use client";
 
-import { currentUser } from "@/lib/mock-data";
+import { accountDisplayName, accountHandle, useAuth } from "@/components/auth/AuthProvider";
 
 // A small, hand-tokenized syntax highlighter for this one snippet — no
 // dependency needed for a single static code block.
@@ -27,7 +27,11 @@ function Pn({ children }: { children: React.ReactNode }) {
 }
 
 export function ProfileCodeCard() {
-  const [first, ...rest] = currentUser.name.split(" ");
+  const { account, status } = useAuth();
+  const name = status === "account" ? accountDisplayName(account) : "Guest Developer";
+  const handle = status === "account" ? accountHandle(account) : "guest";
+  const memberSince = account?.createdAt ? new Date(account.createdAt).getFullYear().toString() : "—";
+  const [first, ...rest] = name.split(" ");
   const last = rest.join(" ") || "—";
 
   return (
@@ -81,12 +85,12 @@ export function ProfileCodeCard() {
           {"\n  "}
           <Prop>handle</Prop>
           <Pn>: </Pn>
-          <Str>&quot;@{currentUser.handle}&quot;</Str>
+          <Str>&quot;@{handle}&quot;</Str>
           <Pn>,</Pn>
           {"\n  "}
           <Prop>memberSince</Prop>
           <Pn>: </Pn>
-          <Str>&quot;{currentUser.memberSince}&quot;</Str>
+          <Str>&quot;{memberSince}&quot;</Str>
           <Pn>,</Pn>
           {"\n"}
           <Pn>{"};"}</Pn>
@@ -122,7 +126,7 @@ export function ProfileCodeCard() {
         <span className="text-white/40">$ </span>
         <span className="text-white/70">node developer.ts</span>
         <div className="mt-1.5 text-accent">
-          → &quot;Hi, I&apos;m {currentUser.name}, learning since {currentUser.memberSince}.&quot;
+          → &quot;Hi, I&apos;m {name}, learning since {memberSince}.&quot;
         </div>
       </div>
     </div>

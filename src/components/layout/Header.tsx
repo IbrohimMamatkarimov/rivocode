@@ -6,8 +6,8 @@ import { Menu, Flame, LogIn } from "lucide-react";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LanguageToggle } from "@/components/theme/LanguageToggle";
 import { useLanguage, type TranslationKey } from "@/components/theme/LanguageProvider";
-import { useAuth } from "@/components/auth/AuthProvider";
-import { currentUser, dashboardStats } from "@/lib/mock-data";
+import { accountInitials, useAuth } from "@/components/auth/AuthProvider";
+import { dashboardStats } from "@/lib/mock-data";
 import { BrandMark } from "./BrandMark";
 import { GlobalSearch } from "./GlobalSearch";
 
@@ -34,13 +34,7 @@ export function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
   const { t } = useLanguage();
   const { status, account } = useAuth();
 
-  const initials =
-    account?.name
-      ?.split(" ")
-      .map((part) => part[0])
-      .slice(0, 2)
-      .join("")
-      .toUpperCase() ?? account?.email?.[0]?.toUpperCase() ?? currentUser.avatarInitials;
+  const initials = accountInitials(account);
 
   return (
     <header className="sticky top-0 z-30 flex h-[4.5rem] shrink-0 items-center justify-between border-b border-border/80 bg-background/80 px-4 backdrop-blur-xl md:px-8">

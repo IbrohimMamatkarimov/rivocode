@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { profileStats, achievements } from "@/lib/mock-data";
 import { ProfileCodeCard } from "@/components/profile/ProfileCodeCard";
-import { useAuth } from "@/components/auth/AuthProvider";
+import { accountDisplayName, accountInitials, useAuth } from "@/components/auth/AuthProvider";
 
 const achievementIcons: Record<string, LucideIcon> = {
   flame: Flame,
@@ -22,14 +22,8 @@ export default function ProfilePage() {
   const router = useRouter();
   const { status, account, logout } = useAuth();
 
-  const displayName = account?.name ?? account?.email?.split("@")[0] ?? "";
-  const initials =
-    displayName
-      .split(" ")
-      .map((part) => part[0])
-      .slice(0, 2)
-      .join("")
-      .toUpperCase() || "?";
+  const displayName = accountDisplayName(account);
+  const initials = accountInitials(account);
 
   const handleLogout = async () => {
     await logout();

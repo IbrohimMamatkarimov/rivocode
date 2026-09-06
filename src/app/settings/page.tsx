@@ -11,8 +11,8 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useTheme } from "@/components/theme/ThemeProvider";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { createClient } from "@/lib/supabase/client";
-import { currentUser } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+import { accountDisplayName, accountHandle } from "@/components/auth/AuthProvider";
 
 function Toggle({ checked, onChange, label }: { checked: boolean; onChange: () => void; label: string }) {
   return (
@@ -65,6 +65,9 @@ export default function SettingsPage() {
   });
   const [saveState, setSaveState] = useState<"idle" | "saved" | "error">("idle");
   const [saving, setSaving] = useState(false);
+  const [editingName, setEditingName] = useState(false);
+  const [nameDraft, setNameDraft] = useState("");
+  const [nameState, setNameState] = useState<"idle" | "saving" | "error">("idle");
 
   useEffect(() => {
     if (!signedIn || !configured) return;
@@ -115,6 +118,38 @@ export default function SettingsPage() {
     window.setTimeout(() => setSaveState("idle"), 2500);
   };
 
+  const startNameEdit = () => {
+    setNameDraft(accountDisplayName(account));
+    setNameState("idle");
+    setEditingName(true);
+  };
+
+  const saveName = async () => {
+    const displayName = nameDraft.trim();
+    if (!displayName || !configured) {
+      setNameState("error");
+      return;
+    }
+    setNameState("saving");
+    const supabase = createClient();
+    const { data: userData } = await supabase.auth.getUser();
+    const user = userData.user;
+    if (!user) {
+      setNameState("error");
+      return;
+    }
+    const { error } = await supabase.auth.updateUser({ data: { full_name: displayName, name: displayName } });
+    if (error) {
+      setNameState("error");
+      return;
+    }
+    // Keep the public profile row in sync when the standard migration is installed.
+    // Auth metadata remains the source of truth if this optional update is unavailable.
+    await supabase.from("profiles").update({ display_name: displayName }).eq("id", user.id);
+    setEditingName(false);
+    setNameState("idle");
+  };
+
   return (
     <AppShell>
       <div className="mb-8">
@@ -130,30 +165,37 @@ export default function SettingsPage() {
             <div className="mt-2 divide-y divide-border">
               <SettingsRow
                 title="Name"
-                description={account?.name ?? account?.email ?? currentUser.name}
+                description={editingName ? "" : accountDisplayName(account)}
                 control={
-                  <Button variant="outline" size="sm">
-                    Edit
-                  </Button>
+                  editingName ? (
+                    <div className="flex items-center gap-2">
+                      <input
+                        value={nameDraft}
+                        onChange={(event) => setNameDraft(event.target.value)}
+                        aria-label="Display name"
+                        className="h-8 w-32 rounded-lg border border-border bg-surface px-2 text-xs text-foreground focus:border-accent focus:outline-none"
+                      />
+                      <Button variant="outline" size="sm" onClick={() => void saveName()} disabled={nameState === "saving"}>
+                        {nameState === "saving" ? "Saving…" : "Save"}
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button variant="outline" size="sm" onClick={startNameEdit}>
+                      Edit
+                    </Button>
+                  )
                 }
               />
+              {nameState === "error" && <p className="px-0 pb-2 text-xs font-medium text-danger">Enter a valid name and try again.</p>}
               <SettingsRow
                 title="Username"
-                description={`@${currentUser.handle}`}
-                control={
-                  <Button variant="outline" size="sm">
-                    Edit
-                  </Button>
-                }
+                description={`@${accountHandle(account)}`}
+                control={<span className="text-xs text-muted-2">From your email</span>}
               />
               <SettingsRow
                 title="Password"
-                description="Last changed 3 months ago"
-                control={
-                  <Button variant="outline" size="sm">
-                    Change
-                  </Button>
-                }
+                description={account?.provider === "google" ? "Managed by Google" : "Use email recovery to reset your password"}
+                control={<span className="text-xs text-muted-2">Account security</span>}
               />
               <SettingsRow
                 title="Log out"
