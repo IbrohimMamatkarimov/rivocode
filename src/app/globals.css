@@ -160,6 +160,11 @@ body {
 @keyframes signal { 0%, 100% { box-shadow: 0 0 0 0 rgba(120,244,230,.3); } 50% { box-shadow: 0 0 0 7px rgba(120,244,230,0); } }
 @keyframes course-orbit { 0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); } 50% { transform: translate3d(-8px, 7px, 0) rotate(14deg); } }
 @keyframes course-logo-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-6px) rotate(2deg); } }
+@keyframes code-swarm-drift-a { 0%, 100% { transform: translate(-50%, -50%) rotate(-5deg); } 28% { transform: translate(calc(-50% + 7px), calc(-50% - 8px)) rotate(6deg); } 58% { transform: translate(calc(-50% - 8px), calc(-50% + 4px)) rotate(-3deg); } 78% { transform: translate(calc(-50% + 3px), calc(-50% + 9px)) rotate(4deg); } }
+@keyframes code-swarm-drift-b { 0%, 100% { transform: translate(-50%, -50%) rotate(4deg); } 22% { transform: translate(calc(-50% - 8px), calc(-50% - 5px)) rotate(-5deg); } 54% { transform: translate(calc(-50% + 5px), calc(-50% + 8px)) rotate(5deg); } 82% { transform: translate(calc(-50% + 9px), calc(-50% - 2px)) rotate(-3deg); } }
+@keyframes code-swarm-drift-c { 0%, 100% { transform: translate(-50%, -50%) rotate(-2deg); } 30% { transform: translate(calc(-50% + 9px), calc(-50% + 3px)) rotate(6deg); } 55% { transform: translate(calc(-50% + 2px), calc(-50% - 9px)) rotate(-5deg); } 76% { transform: translate(calc(-50% - 7px), calc(-50% + 6px)) rotate(3deg); } }
+@keyframes code-swarm-drift-d { 0%, 100% { transform: translate(-50%, -50%) rotate(5deg); } 24% { transform: translate(calc(-50% + 5px), calc(-50% - 9px)) rotate(-4deg); } 49% { transform: translate(calc(-50% - 9px), calc(-50% - 1px)) rotate(4deg); } 74% { transform: translate(calc(-50% + 6px), calc(-50% + 7px)) rotate(-6deg); } }
+@keyframes code-swarm-drift-e { 0%, 100% { transform: translate(-50%, -50%) rotate(-4deg); } 26% { transform: translate(calc(-50% - 5px), calc(-50% + 8px)) rotate(5deg); } 52% { transform: translate(calc(-50% + 9px), calc(-50% + 1px)) rotate(-4deg); } 80% { transform: translate(calc(-50% - 3px), calc(-50% - 8px)) rotate(4deg); } }
 @keyframes media-drift { 0%, 100% { transform: scale(1.02) translate3d(0, 0, 0); } 50% { transform: scale(1.09) translate3d(-1.5%, -1%, 0); } }
 @keyframes play-float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-5px) scale(1.04); } }
 @keyframes console-sweep { 0%, 65%, 100% { transform: translateX(-110%); opacity: 0; } 14%, 48% { opacity: .5; } 58% { transform: translateX(540%); opacity: 0; } }
@@ -252,6 +257,18 @@ body {
 .course-orbit { animation: course-orbit 8s ease-in-out infinite; }
 .course-orbit-small { animation-delay: -2.7s; animation-duration: 6.5s; }
 .course-logo-float { animation: course-logo-float 4.8s ease-in-out infinite; }
+.dashboard-logo-swarm { position: absolute; top: 50%; left: 54%; width: min(62%, 214px); height: 166px; transform: translate(-50%, -50%); }
+.dashboard-logo-swarm::before { content: ""; position: absolute; inset: 17% 7%; border: 1px dashed rgba(139, 247, 235, .16); border-radius: 45% 55% 50% 50%; transform: rotate(-12deg); }
+.dashboard-logo-swarm-position { position: absolute; left: var(--swarm-left); top: var(--swarm-top); width: 0; height: 0; }
+.dashboard-logo-swarm-badge { position: absolute; animation-duration: 7.5s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+.code-swarm-drift-a { animation-name: code-swarm-drift-a; }
+.code-swarm-drift-b { animation-name: code-swarm-drift-b; }
+.code-swarm-drift-c { animation-name: code-swarm-drift-c; }
+.code-swarm-drift-d { animation-name: code-swarm-drift-d; }
+.code-swarm-drift-e { animation-name: code-swarm-drift-e; }
+.dashboard-logo-swarm-position:nth-child(2n) .dashboard-logo-swarm-badge { animation-duration: 8.8s; animation-delay: -2.7s; }
+.dashboard-logo-swarm-position:nth-child(3n) .dashboard-logo-swarm-badge { animation-duration: 9.7s; animation-delay: -4.1s; }
+@media (prefers-reduced-motion: reduce) { .dashboard-logo-swarm-badge { animation: none; transform: translate(-50%, -50%); } }
 .course-media-zoom, .lesson-video-drift { animation: media-drift 11s ease-in-out infinite; }
 .play-button-float { animation: pulse-ring 2.3s cubic-bezier(0.4, 0, 0.6, 1) infinite, play-float 3.2s ease-in-out infinite; }
 .dashboard-console { position: relative; isolation: isolate; }

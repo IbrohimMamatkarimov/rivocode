@@ -3,6 +3,7 @@
 import { Quote } from "lucide-react";
 import { useLanguage, type TranslationKey } from "@/components/theme/LanguageProvider";
 import { useAuth } from "@/components/auth/AuthProvider";
+import { DashboardHeroOrbit } from "./DashboardHeroOrbit";
 
 function useGreetingKey(): TranslationKey {
   const hour = new Date().getHours();
@@ -23,6 +24,7 @@ export function DashboardHero() {
 
   return (
     <section className="hero-surface mb-7 overflow-hidden rounded-3xl border border-white/10 px-6 py-9 shadow-lg sm:px-9 sm:py-11">
+      <DashboardHeroOrbit />
       <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.17em] text-accent-2">{t("hero_eyebrow")}</p>
       <h1 className="max-w-2xl text-[34px] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[44px]">
         {t(greetingKey)}

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { useLanguage } from "@/components/theme/LanguageProvider";
 import { CodeTypewriter } from "@/components/login/CodeTypewriter";
 import { AuthLoadingLabel } from "@/components/login/AuthLoadingLabel";
+import { LoginFormBackdrop } from "@/components/login/LoginFormBackdrop";
 
 function GoogleGlyph() {
   return (
@@ -43,7 +44,7 @@ export default function LoginPage() {
   const handleGoogle = async () => {
     setError(null);
     setGoogleLoading(true);
-    await signInWithGoogle("/dashboard");
+    await signInWithGoogle();
     // On success the browser navigates away to Google immediately, so this
     // only re-runs if signInWithOAuth itself failed to even start the redirect.
     setGoogleLoading(false);
@@ -96,8 +97,6 @@ export default function LoginPage() {
             <Sparkles className="h-3 w-3" />
             {t("login_hero_badge")}
           </p>
-          <h1 className="text-[34px] font-bold leading-[1.1] tracking-tight text-white">{t("login_hero_title")}</h1>
-          <p className="mt-4 text-[15px] leading-relaxed text-white/65">{t("login_hero_subtitle")}</p>
 
           <div className="relative mt-8">
             <CodeTypewriter />
@@ -107,8 +106,9 @@ export default function LoginPage() {
         <p className="relative text-xs text-white/40">© {new Date().getFullYear()} RivoCode</p>
       </div>
 
-      <div className="flex min-h-screen items-center justify-center px-6 py-12">
-        <div className="w-full max-w-sm">
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-6 py-12">
+        <LoginFormBackdrop />
+        <div className="relative w-full max-w-sm">
           <button
             type="button"
             onClick={handleBack}

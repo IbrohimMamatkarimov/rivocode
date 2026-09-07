@@ -1,9 +1,6 @@
 import type { SVGProps } from "react";
 
-/**
- * Original course glyphs used across the studio. They deliberately borrow no
- * trademarked artwork; each mark is a compact visual shorthand for a topic.
- */
+/** Brand marks shared by the dashboard, course cards, and course picker. */
 
 type LogoProps = SVGProps<SVGSVGElement> & { className?: string };
 
@@ -26,7 +23,6 @@ function Base({
         </defs>
       )}
       <rect width="24" height="24" rx={rx} fill={fill} />
-      <path d="M3 5.5h18M3 18.5h18" stroke="#fff" strokeOpacity=".12" />
       {children}
     </svg>
   );
@@ -34,25 +30,27 @@ function Base({
 
 export function HtmlCssLogo(props: LogoProps) {
   return (
-    <Base bg="#D95D4E" bg2="#F08A72" {...props}>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path fill="#E44D26" d="M3 2h18l-1.64 18.43L12 22l-7.36-2.07L3 2Z" />
+      <path fill="#F16529" d="M12 3.5v16.94l5.86-1.65L19.2 3.5H12Z" />
       <text
         x="12"
-        y="16.5"
+        y="16.7"
         textAnchor="middle"
         fontFamily="ui-monospace, Menlo, monospace"
         fontWeight="700"
-        fontSize="9.5"
+        fontSize="10"
         fill="#fff"
       >
-        {"</>"}
+        5
       </text>
-    </Base>
+    </svg>
   );
 }
 
 export function JavaScriptLogo(props: LogoProps) {
   return (
-    <Base bg="#F1BF5A" {...props}>
+    <Base bg="#F7DF1E" rx="0" {...props}>
       <text
         x="12"
         y="16.5"
@@ -60,7 +58,7 @@ export function JavaScriptLogo(props: LogoProps) {
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         fontWeight="800"
         fontSize="9.5"
-        fill="#1a1a1a"
+        fill="#000"
       >
         JS
       </text>
@@ -70,36 +68,36 @@ export function JavaScriptLogo(props: LogoProps) {
 
 export function ReactLogo(props: LogoProps) {
   return (
-    <Base bg="#27213F" {...props}>
-      <g stroke="#B6A8FF" fill="none" strokeWidth="1.1">
+    <Base bg="#20232A" {...props}>
+      <g stroke="#61DAFB" fill="none" strokeWidth="1.1">
         <ellipse cx="12" cy="12" rx="7" ry="2.8" />
         <ellipse cx="12" cy="12" rx="7" ry="2.8" transform="rotate(60 12 12)" />
         <ellipse cx="12" cy="12" rx="7" ry="2.8" transform="rotate(120 12 12)" />
       </g>
-      <circle cx="12" cy="12" r="1.6" fill="#B6A8FF" />
+      <circle cx="12" cy="12" r="1.6" fill="#61DAFB" />
     </Base>
   );
 }
 
 export function PythonLogo(props: LogoProps) {
   return (
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <title>Python</title>
+    <Base bg="#FFFFFF" {...props}>
+      {/* Official Python two-snake mark. */}
       <path
         fill="#3776AB"
-        d="M12 2.2c-4 0-3.75 1.75-3.75 1.75v1.8h3.82v.55H6.72S4.1 6 4.1 10.15c0 4.15 2.3 4 2.3 4h1.38v-1.95s-.08-2.3 2.28-2.3h3.92s2.2.04 2.2-2.12V4.34S16.54 2.2 12 2.2Zm-2.1 1.25a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5Z"
+        d="M12 2c-4.57 0-4.28 1.98-4.28 1.98l.01 2.05h4.36v.62H6.02S3 6.3 3 11.36c0 5.05 2.64 4.87 2.64 4.87h1.57v-2.2s-.08-2.64 2.61-2.64h4.49s2.52.04 2.52-2.43V4.39S17.2 2 12 2ZM9.6 3.4a.79.79 0 1 1 0 1.58.79.79 0 0 1 0-1.58Z"
       />
       <path
-        fill="#FFD343"
-        d="M12 21.8c4 0 3.75-1.75 3.75-1.75v-1.8h-3.82v-.55h5.35s2.62.35 2.62-3.8c0-4.15-2.3-4-2.3-4h-1.38v1.95s.08 2.3-2.28 2.3h-3.92s-2.2-.04-2.2 2.12v3.39S7.46 21.8 12 21.8Zm2.1-1.25a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
+        fill="#FFD43B"
+        d="M12 22c4.57 0 4.28-1.98 4.28-1.98l-.01-2.05h-4.36v-.62h6.07S21 17.7 21 12.64c0-5.05-2.64-4.87-2.64-4.87h-1.57v2.2s.08 2.64-2.61 2.64H9.69s-2.52-.04-2.52 2.43v4.57S6.8 22 12 22Zm2.4-1.4a.79.79 0 1 1 0-1.58.79.79 0 0 1 0 1.58Z"
       />
-    </svg>
+    </Base>
   );
 }
 
 export function TypeScriptLogo(props: LogoProps) {
   return (
-    <Base bg="#5D54D6" {...props}>
+    <Base bg="#3178C6" rx="0" {...props}>
       <text
         x="12"
         y="16.5"
@@ -117,11 +115,11 @@ export function TypeScriptLogo(props: LogoProps) {
 
 export function NodeLogo(props: LogoProps) {
   return (
-    <Base bg="#28233D" bg2="#504278" {...props}>
+    <Base bg="#5FA04E" {...props}>
       <path
         d="M12 3.2 20 7.6v8.8L12 20.8 4 16.4V7.6Z"
         fill="none"
-        stroke="#C0B1FF"
+        stroke="#fff"
         strokeWidth="1.4"
         strokeLinejoin="round"
       />
@@ -132,7 +130,7 @@ export function NodeLogo(props: LogoProps) {
         fontFamily="ui-sans-serif, system-ui, sans-serif"
         fontWeight="800"
         fontSize="6.5"
-        fill="#C0B1FF"
+        fill="#fff"
       >
         JS
       </text>
@@ -142,7 +140,7 @@ export function NodeLogo(props: LogoProps) {
 
 export function GitLogo(props: LogoProps) {
   return (
-    <Base bg="#E06A59" {...props}>
+    <Base bg="#F05032" {...props}>
       <g stroke="#fff" strokeWidth="1.4" fill="#fff">
         <circle cx="8.5" cy="7.5" r="1.4" />
         <circle cx="8.5" cy="16.5" r="1.4" fill="none" stroke="#fff" />
@@ -156,7 +154,7 @@ export function GitLogo(props: LogoProps) {
 
 export function DataScienceLogo(props: LogoProps) {
   return (
-    <Base bg="#7C5DD8" bg2="#433593" {...props}>
+    <Base bg="#150458" {...props}>
       <g fill="#fff">
         <rect x="6.5" y="13" width="2.6" height="5" rx="0.6" />
         <rect x="10.7" y="9.5" width="2.6" height="8.5" rx="0.6" />
@@ -168,7 +166,7 @@ export function DataScienceLogo(props: LogoProps) {
 
 export function CppLogo(props: LogoProps) {
   return (
-    <Base bg="#356CC5" {...props}>
+    <Base bg="#00599C" {...props}>
       <text
         x="12"
         y="16"
@@ -186,7 +184,7 @@ export function CppLogo(props: LogoProps) {
 
 export function JavaLogo(props: LogoProps) {
   return (
-    <Base bg="#B0472E" bg2="#E68A3D" {...props}>
+    <Base bg="#ED8B00" {...props}>
       <path
         d="M9 15.5c1.5 1.4 5.5 1.4 6.5.2M8.3 18c2.3 1.1 6 .9 7.7-.5"
         fill="none"
@@ -207,7 +205,7 @@ export function JavaLogo(props: LogoProps) {
 
 export function SqlLogo(props: LogoProps) {
   return (
-    <Base bg="#2F6FBD" bg2="#1D4C8C" {...props}>
+    <Base bg="#336791" {...props}>
       <g fill="none" stroke="#fff" strokeWidth="1.2">
         <ellipse cx="12" cy="7.2" rx="5.2" ry="2" />
         <path d="M6.8 7.2v9.6c0 1.1 2.3 2 5.2 2s5.2-.9 5.2-2V7.2" />
@@ -219,7 +217,7 @@ export function SqlLogo(props: LogoProps) {
 
 export function CSharpLogo(props: LogoProps) {
   return (
-    <Base bg="#6B3FA0" bg2="#8A5CC4" {...props}>
+    <Base bg="#512BD4" {...props}>
       <text
         x="12"
         y="16"

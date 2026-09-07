@@ -20,7 +20,7 @@ interface AuthContextValue {
   status: AuthStatus;
   account: AccountInfo | null;
   configured: boolean;
-  signInWithGoogle: (next?: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   signInWithEmail: (email: string, password: string) => Promise<string | null>;
   signUpWithEmail: (email: string, password: string) => Promise<{ error: string | null; needsConfirmation: boolean }>;
   logout: () => Promise<void>;
@@ -116,12 +116,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, [supabase]);
 
-  const signInWithGoogle = async (next = "/dashboard") => {
+  const signInWithGoogle = async () => {
     if (!supabase) return;
+    // Deliberately no query string on redirectTo (e.g. no "?next=..."):
+    // Supabase's redirect URL allow list does an exact match against the
+    // registered URLs, which don't include wildcards, so appending anything
+    // here causes Google/Supabase to reject the redirect with a
+    // "requested path is invalid" error. /auth/callback always defaults to
+    // /dashboard on its own when no next is present, so nothing is lost.
     const origin = window.location.origin;
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${origin}/auth/callback?next=${encodeURIComponent(next)}` },
+      options: { redirectTo: `${origin}/auth/callback` },
     });
   };
 

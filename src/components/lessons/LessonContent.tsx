@@ -1,5 +1,6 @@
 import { BookOpenCheck, CircleDotDashed, Lightbulb, Info, ListChecks, Target } from "lucide-react";
 import { VideoPlayer } from "./VideoPlayer";
+import { TypedCode } from "@/components/shared/TypedCode";
 import type { LessonExample } from "@/lib/types";
 
 interface LessonContentProps {
@@ -38,7 +39,7 @@ function ExampleCard({
         )}
       </div>
       <pre className="scrollbar-thin overflow-x-auto bg-transparent p-5 font-mono text-[13px] leading-relaxed text-white/90">
-        <code>{code}</code>
+        <TypedCode code={code} />
       </pre>
       {note && (
         <div className="border-t border-white/10 bg-white/[0.03] px-4 py-3 text-[13px] leading-relaxed text-white/60">
@@ -116,7 +117,7 @@ export function LessonContent({
             Syntax
           </div>
           <pre className="scrollbar-thin overflow-x-auto p-4 font-mono text-[13px] leading-relaxed text-foreground">
-            <code>{syntax}</code>
+            <TypedCode code={syntax} />
           </pre>
         </div>
       )}

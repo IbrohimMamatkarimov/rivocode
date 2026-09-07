@@ -4,6 +4,7 @@ import { Badge, difficultyTone } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { challenges } from "@/lib/mock-data";
 import { useLanguage, translateDifficulty } from "@/components/theme/LanguageProvider";
+import { TypedCode } from "@/components/shared/TypedCode";
 
 const starters: Record<string, string> = {
   "fizz-buzz": `function fizzBuzz(n) {
@@ -46,7 +47,7 @@ export function FeaturedChallenge() {
         <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/60">{challenge.description}</p>
 
         <pre className="scrollbar-thin mt-5 overflow-x-auto rounded-lg border border-white/10 bg-white/[0.04] p-4 font-mono text-[13px] leading-relaxed text-white/80">
-          <code>{starter}</code>
+          <TypedCode code={starter} />
         </pre>
 
         <div className="mt-6 flex flex-wrap items-center gap-4">
