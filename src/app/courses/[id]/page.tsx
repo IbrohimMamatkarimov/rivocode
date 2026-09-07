@@ -1,13 +1,18 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CheckCircle2, Circle, Clock, Star, Users, PlayCircle } from "lucide-react";
+import { Clock, Star, Users, PlayCircle } from "lucide-react";
 import { AppShell } from "@/components/layout/AppShell";
 import { Card } from "@/components/ui/Card";
 import { Badge, difficultyTone } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { CourseProgress } from "@/components/courses/CourseProgress";
+import { CourseLessonList } from "@/components/courses/CourseLessonList";
 import { getIcon } from "@/lib/icon-map";
 import { getCourseBySlug, courses } from "@/lib/mock-data";
+
+function formatStudents(students: number) {
+  return students >= 1000 ? `${(students / 1000).toFixed(students % 1000 === 0 ? 0 : 1)}k+` : `${students}+`;
+}
 
 export function generateStaticParams() {
   return courses.map((course) => ({ id: course.slug }));
@@ -54,7 +59,7 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
               {course.students && (
                 <span className="flex items-center gap-1.5">
                   <Users className="h-4 w-4" />
-                  {course.students.toLocaleString()} students
+                  {formatStudents(course.students)} students
                 </span>
               )}
               <span className="flex items-center gap-1.5">
@@ -98,50 +103,11 @@ export default async function CoursePage({ params }: { params: Promise<{ id: str
 
       <Card className="mb-8 p-5">
         <CourseProgress
-          completedLessons={course.completedLessons}
-          totalLessons={course.totalLessons}
-          progress={course.progress}
+          course={course}
         />
       </Card>
 
-      <h2 className="mb-4 text-lg font-bold tracking-tight text-foreground">Course content</h2>
-      <div className="space-y-3">
-        {course.sections.map((section) => (
-          <Card key={section.id} className="overflow-hidden">
-            <div className="flex items-center gap-3 border-b border-border bg-surface-raised/60 px-5 py-3.5">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-accent-soft text-[11px] font-bold text-accent">
-                {String(section.index).padStart(2, "0")}
-              </span>
-              <h3 className="text-sm font-semibold text-foreground">{section.title}</h3>
-              <span className="ml-auto text-xs text-muted-2">{section.lessons.length} lessons</span>
-            </div>
-            <ul className="divide-y divide-border">
-              {section.lessons.map((lesson) => {
-                const content = (
-                  <div className="flex items-center gap-3 px-5 py-3 transition-colors hover:bg-surface-raised">
-                    {lesson.status === "completed" && (
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-success" />
-                    )}
-                    {lesson.status !== "completed" && <Circle className="h-4 w-4 shrink-0 text-accent" />}
-                    <span className="flex-1 text-sm text-foreground">{lesson.title}</span>
-                    {lesson.videoId && <PlayCircle className="h-3.5 w-3.5 shrink-0 text-accent" />}
-                    <span className="flex items-center gap-1 text-xs text-muted-2">
-                      <Clock className="h-3 w-3" />
-                      {lesson.durationMinutes}m
-                    </span>
-                  </div>
-                );
-
-                return (
-                  <li key={lesson.id}>
-                    <Link href={`/lessons/${lesson.id}`}>{content}</Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </Card>
-        ))}
-      </div>
+      <CourseLessonList course={course} />
     </AppShell>
   );
 }

@@ -6,21 +6,24 @@ import { Button } from "@/components/ui/Button";
 import { LanguageLogo } from "@/lib/language-logos";
 import { getCourseBySlug } from "@/lib/mock-data";
 import { useLanguage } from "@/components/theme/LanguageProvider";
+import { useLearningProgress } from "@/components/progress/LearningProgressProvider";
 
 export function ContinueLearning({
   courseId,
   lessonTitle,
-  progress,
+  progress: fallbackProgress,
 }: {
   courseId: string;
   lessonTitle: string;
   progress: number;
 }) {
   const { t } = useLanguage();
+  const { getCourseProgress, isLessonComplete } = useLearningProgress();
   const course = getCourseBySlug(courseId);
+  const progress = course ? getCourseProgress(course).progress : fallbackProgress;
   const nextLesson = course?.sections
     .flatMap((s) => s.lessons)
-    .find((l) => l.status === "current");
+    .find((lesson) => !isLessonComplete(lesson.id));
 
   return (
     <Card className="studio-panel overflow-hidden">

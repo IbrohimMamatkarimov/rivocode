@@ -9,21 +9,23 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { cn } from "@/lib/utils";
 import { categories, courses } from "@/lib/mock-data";
 import { useLanguage, translateCategory } from "@/components/theme/LanguageProvider";
+import { useLearningProgress } from "@/components/progress/LearningProgressProvider";
 
 export default function CoursesPage() {
   const { t } = useLanguage();
+  const { getCourseProgress } = useLearningProgress();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
 
   const filtered = useMemo(() => {
-    return courses.filter((course) => {
+    return courses.map((course) => ({ ...course, ...getCourseProgress(course) })).filter((course) => {
       const matchesCategory = category === "All" || course.category === category;
       const matchesQuery =
         query.trim().length === 0 ||
         course.title.toLowerCase().includes(query.trim().toLowerCase());
       return matchesCategory && matchesQuery;
     });
-  }, [query, category]);
+  }, [query, category, getCourseProgress]);
 
   return (
     <AppShell>

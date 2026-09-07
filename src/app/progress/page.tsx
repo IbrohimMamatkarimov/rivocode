@@ -7,8 +7,8 @@ import { ProgressChart } from "@/components/progress/ProgressChart";
 import { SkillProgress } from "@/components/progress/SkillProgress";
 import { PageHero } from "@/components/ui/PageHero";
 import { cn } from "@/lib/utils";
-import { dashboardStats, weeklyActivity, skillLevels, achievements } from "@/lib/mock-data";
 import { useLanguage } from "@/components/theme/LanguageProvider";
+import { useLearningProgress } from "@/components/progress/LearningProgressProvider";
 
 const achievementIcons: Record<string, LucideIcon> = {
   flame: Flame,
@@ -19,9 +19,10 @@ const achievementIcons: Record<string, LucideIcon> = {
 
 export default function ProgressPage() {
   const { t } = useLanguage();
+  const { achievements, skillLevels, stats, weeklyActivity } = useLearningProgress();
   return (
     <AppShell>
-      <PageHero eyebrow={t("progress_eyebrow")} icon={Trophy} title={t("progress_title")} description={t("progress_description")} stats={[{ label: t("stat_streak"), value: `${dashboardStats.streakDays}d` }, { label: t("stat_hours"), value: String(dashboardStats.hoursLearned) }]} />
+      <PageHero eyebrow={t("progress_eyebrow")} icon={Trophy} title={t("progress_title")} description={t("progress_description")} stats={[{ label: t("stat_streak"), value: `${stats.streakDays}d` }, { label: t("stat_hours"), value: String(stats.hoursLearned) }]} />
 
       <div className="mb-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card className="studio-panel p-5 sm:p-6">
@@ -29,7 +30,7 @@ export default function ProgressPage() {
             <Flame className="h-4 w-4" />
           </div>
           <p className="mt-4 text-2xl font-semibold tracking-tight text-foreground">
-            {dashboardStats.streakDays} {t("stat_streak").toLowerCase()}
+            {stats.streakDays} {t("stat_streak").toLowerCase()}
           </p>
           <p className="mt-0.5 text-[13px] text-muted">{t("current_streak_label")}</p>
         </Card>

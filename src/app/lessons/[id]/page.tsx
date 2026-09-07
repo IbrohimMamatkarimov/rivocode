@@ -3,6 +3,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { LessonContent } from "@/components/lessons/LessonContent";
 import { CodeEditor } from "@/components/lessons/CodeEditor";
 import { LessonSidebar } from "@/components/lessons/LessonSidebar";
+import { CompleteLessonButton } from "@/components/lessons/CompleteLessonButton";
 import { getAllLessons, getLessonById, getCourseBySlug } from "@/lib/mock-data";
 import { getLessonContent } from "@/lib/lesson-content";
 
@@ -70,8 +71,7 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[17rem_minmax(0,1fr)]">
         <aside className="lg:order-1">
           <LessonSidebar
-            progress={Math.round((currentIndex + 1) / Math.max(allInCourse.length, 1) * 100)}
-            lessons={allInCourse.map((l) => ({ id: l.id, title: l.title, status: l.status }))}
+            lessons={allInCourse.map((l) => ({ id: l.id, title: l.title }))}
             activeLessonId={lesson.id}
             prevHref={prevLesson ? `/lessons/${prevLesson.id}` : undefined}
             nextHref={nextLesson ? `/lessons/${nextLesson.id}` : undefined}
@@ -91,6 +91,8 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             videoId={lesson.videoId}
             startSeconds={lesson.startSeconds}
           />
+
+          <CompleteLessonButton lessonId={lesson.id} />
 
           <div id="try-it-editor" className="scroll-mt-20">
             <CodeEditor

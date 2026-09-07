@@ -246,7 +246,7 @@ export const courses: Course[] = [
     totalLessons: 48,
     completedLessons: 0,
     rating: 4.8,
-    students: 128400,
+    students: 2400,
     videoId: courseVideos["javascript-fundamentals"],
     sections: buildSections("javascript-fundamentals", jsSections, 0, jsSectionVideos),
   },
@@ -263,7 +263,7 @@ export const courses: Course[] = [
     totalLessons: 25,
     completedLessons: 0,
     rating: 4.9,
-    students: 214800,
+    students: 2800,
     videoId: courseVideos["html-css"],
     sections: buildSections(
       "html-css",
@@ -294,7 +294,7 @@ export const courses: Course[] = [
     totalLessons: 26,
     completedLessons: 0,
     rating: 4.7,
-    students: 96300,
+    students: 1900,
     videoId: courseVideos["react-essentials"],
     sections: buildSections(
       "react-essentials",
@@ -324,7 +324,7 @@ export const courses: Course[] = [
     totalLessons: 36,
     completedLessons: 0,
     rating: 4.8,
-    students: 176200,
+    students: 2600,
     videoId: courseVideos["python-basics"],
     sections: buildSections(
       "python-basics",
@@ -357,7 +357,7 @@ export const courses: Course[] = [
     totalLessons: 16,
     completedLessons: 0,
     rating: 4.6,
-    students: 41800,
+    students: 1300,
     videoId: courseVideos["typescript-in-depth"],
     sections: buildSections(
       "typescript-in-depth",
@@ -385,7 +385,7 @@ export const courses: Course[] = [
     totalLessons: 13,
     completedLessons: 0,
     rating: 4.7,
-    students: 58900,
+    students: 1700,
     videoId: courseVideos["nodejs-fundamentals"],
     sections: buildSections(
       "nodejs-fundamentals",
@@ -412,7 +412,7 @@ export const courses: Course[] = [
     totalLessons: 11,
     completedLessons: 0,
     rating: 4.9,
-    students: 87100,
+    students: 2200,
     videoId: courseVideos["git-github"],
     sections: buildSections(
       "git-github",
@@ -438,7 +438,7 @@ export const courses: Course[] = [
     totalLessons: 12,
     completedLessons: 0,
     rating: 4.7,
-    students: 39400,
+    students: 900,
     videoId: courseVideos["data-science-intro"],
     sections: buildSections(
       "data-science-intro",
@@ -464,7 +464,7 @@ export const courses: Course[] = [
     totalLessons: 24,
     completedLessons: 0,
     rating: 4.8,
-    students: 152300,
+    students: 1400,
     videoId: courseVideos["cpp-fundamentals"],
     sections: buildSections(
       "cpp-fundamentals",
@@ -495,7 +495,7 @@ export const courses: Course[] = [
     totalLessons: 22,
     completedLessons: 0,
     rating: 4.8,
-    students: 187600,
+    students: 2300,
     videoId: courseVideos["java-fundamentals"],
     sections: buildSections(
       "java-fundamentals",
@@ -526,7 +526,7 @@ export const courses: Course[] = [
     totalLessons: 17,
     completedLessons: 0,
     rating: 4.9,
-    students: 143900,
+    students: 1800,
     videoId: courseVideos["sql-fundamentals"],
     sections: buildSections(
       "sql-fundamentals",
@@ -555,7 +555,7 @@ export const courses: Course[] = [
     totalLessons: 22,
     completedLessons: 0,
     rating: 4.7,
-    students: 98700,
+    students: 1100,
     videoId: courseVideos["csharp-fundamentals"],
     sections: buildSections(
       "csharp-fundamentals",

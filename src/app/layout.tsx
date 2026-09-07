@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LanguageProvider } from "@/components/theme/LanguageProvider";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { LearningProgressProvider } from "@/components/progress/LearningProgressProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -34,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased">
         <ThemeProvider>
           <LanguageProvider>
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider><LearningProgressProvider>{children}</LearningProgressProvider></AuthProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

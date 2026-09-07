@@ -1,24 +1,28 @@
+"use client";
+
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, CheckCircle2, Circle } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Button } from "@/components/ui/Button";
+import { useLearningProgress } from "@/components/progress/LearningProgressProvider";
 
 interface LessonNavLesson {
   id: string;
   title: string;
-  status: "completed" | "current" | "available";
 }
 
 interface LessonSidebarProps {
-  progress: number;
   lessons: LessonNavLesson[];
   activeLessonId: string;
   prevHref?: string;
   nextHref?: string;
 }
 
-export function LessonSidebar({ progress, lessons, activeLessonId, prevHref, nextHref }: LessonSidebarProps) {
+export function LessonSidebar({ lessons, activeLessonId, prevHref, nextHref }: LessonSidebarProps) {
+  const { isLessonComplete } = useLearningProgress();
+  const completedLessons = lessons.filter((lesson) => isLessonComplete(lesson.id)).length;
+  const progress = Math.round((completedLessons / Math.max(lessons.length, 1)) * 100);
   return (
     <div className="space-y-4 lg:sticky lg:top-24">
       <Card className="overflow-hidden p-0">
@@ -40,8 +44,7 @@ export function LessonSidebar({ progress, lessons, activeLessonId, prevHref, nex
                     : "text-muted hover:bg-surface-raised hover:text-foreground"
                 }`}
               >
-                {lesson.status === "completed" && <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-success" />}
-                {lesson.status !== "completed" && <Circle className="h-3.5 w-3.5 shrink-0 text-accent" />}
+                {isLessonComplete(lesson.id) ? <CheckCircle2 className="h-3.5 w-3.5 shrink-0 text-success" /> : <Circle className="h-3.5 w-3.5 shrink-0 text-accent" />}
                 <span className="truncate">{lesson.title}</span>
               </Link>
             </li>

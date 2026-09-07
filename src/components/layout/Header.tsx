@@ -7,7 +7,7 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LanguageToggle } from "@/components/theme/LanguageToggle";
 import { useLanguage, type TranslationKey } from "@/components/theme/LanguageProvider";
 import { accountInitials, useAuth } from "@/components/auth/AuthProvider";
-import { dashboardStats } from "@/lib/mock-data";
+import { useLearningProgress } from "@/components/progress/LearningProgressProvider";
 import { BrandMark } from "./BrandMark";
 import { GlobalSearch } from "./GlobalSearch";
 
@@ -33,6 +33,7 @@ export function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
   const pathname = usePathname();
   const { t } = useLanguage();
   const { status, account } = useAuth();
+  const { stats } = useLearningProgress();
 
   const initials = accountInitials(account);
 
@@ -59,7 +60,7 @@ export function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="hidden items-center gap-1.5 rounded-full border border-warning/25 bg-warning-soft px-3 py-1.5 text-xs font-semibold text-warning sm:flex">
           <Flame className="h-3.5 w-3.5" fill="currentColor" />
-          {dashboardStats.streakDays} {t("stat_streak").toLowerCase()}
+          {stats.streakDays} {t("stat_streak").toLowerCase()}
         </div>
 
         <GlobalSearch />
