@@ -40,7 +40,7 @@ export function Sidebar() {
   const { t } = useLanguage();
 
   return (
-    <aside className="sticky top-0 hidden h-screen w-[17.5rem] shrink-0 flex-col border-r border-white/10 bg-ink px-4 py-5 text-white lg:flex">
+    <aside className="rivo-sidebar sticky top-0 hidden h-screen w-[14.5rem] shrink-0 flex-col border-r border-white/10 bg-ink px-4 py-5 text-white lg:flex">
       <div className="px-2"><BrandMark label inverse className="text-accent-2" /></div>
 
       <nav className="mt-9 flex flex-1 flex-col gap-1">

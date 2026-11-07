@@ -4,12 +4,13 @@ import { useState } from "react";
 import { Sidebar } from "./Sidebar";
 import { MobileNav } from "./MobileNav";
 import { Header } from "./Header";
+import { RivoCompanion } from "@/components/companions/RivoCompanion";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background lg:flex">
+    <div className="rivo-app min-h-screen bg-background lg:flex">
       <Sidebar />
       <div className="min-w-0 flex-1">
         <Header onOpenMenu={() => setMobileNavOpen(true)} />
@@ -24,6 +25,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </footer>
       </div>
+      <RivoCompanion/>
     </div>
   );
 }
