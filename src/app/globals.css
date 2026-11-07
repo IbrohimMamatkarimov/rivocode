@@ -365,3 +365,10 @@ body {
 @media (min-width: 1024px) { .dashboard-hero { grid-template-columns: minmax(0, 1.05fr) minmax(350px, .95fr); align-items: center; } }
 @media (max-width: 1023px) { .dashboard-hero { min-height: auto; } }
 @media (prefers-reduced-motion: reduce) { .dashboard-code-card { animation: none; transform: none; } }
+
+
+/* Pointer light follows the learner across the hero; reduced motion stays quiet. */
+.dashboard-hero { --pointer-x: 78%; --pointer-y: 45%; --tilt-x: 0deg; --tilt-y: 0deg; }
+.dashboard-hero::after { background: radial-gradient(360px circle at var(--pointer-x) var(--pointer-y), rgba(46,212,197,.14), transparent 72%), linear-gradient(110deg, transparent 20%, rgba(255,255,255,.045) 50%, transparent 75%); }
+.dashboard-code-card { transform: perspective(1200px) rotateY(calc(-5deg + var(--tilt-y))) rotateX(calc(2deg + var(--tilt-x))); transition: transform 160ms ease-out; }
+@media (prefers-reduced-motion: reduce) { .dashboard-code-card { transform: none; transition: none; } }
