@@ -6,6 +6,7 @@ import { LessonSidebar } from "@/components/lessons/LessonSidebar";
 import { CompleteLessonButton } from "@/components/lessons/CompleteLessonButton";
 import { getAllLessons, getLessonById, getCourseBySlug } from "@/lib/mock-data";
 import { getLessonContent } from "@/lib/lesson-content";
+import { LearningHelp } from "@/components/lessons/LearningHelp";
 
 const STARTER_FILE_NAMES: Record<string, string> = {
   javascript: "script.js",
@@ -92,6 +93,8 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
             startSeconds={lesson.startSeconds}
           />
 
+          <LearningHelp lesson={`Course: ${lesson.courseTitle}. Lesson: ${content.heading}.\n\nExplanation: ${content.explanation}\n\nExercise: ${content.exercisePrompt}`} />
+
           <CompleteLessonButton lessonId={lesson.id} />
 
           <div id="try-it-editor" className="scroll-mt-20">
@@ -107,3 +110,4 @@ export default async function LessonPage({ params }: { params: Promise<{ id: str
     </AppShell>
   );
 }
+
