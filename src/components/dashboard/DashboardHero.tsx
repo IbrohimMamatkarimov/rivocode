@@ -51,7 +51,7 @@ export function DashboardHero() {
         <div className="mt-7 flex flex-wrap items-center gap-3">
           <Link
             href="/learn"
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent-2 px-5 text-sm font-bold text-ink shadow-[0_12px_30px_rgba(98,229,215,.2)] transition-all hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_16px_34px_rgba(98,229,215,.24)]"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-accent px-5 text-sm font-bold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-md"
           >
             <BookOpen className="h-4 w-4" />
             {t("btn_continue_learning")}
@@ -81,9 +81,9 @@ export function DashboardHero() {
           </div>
           <div className="space-y-3 px-5 py-5 font-mono text-xs sm:text-[13px]">
             <p><span className="text-violet-700">const</span> <span className="text-sky-700">idea</span> = <span className="text-emerald-700">"something useful"</span>;</p>
-            <p><span className="text-violet-300">function</span> <span className="text-amber-700">build</span>() {"{"}</p>
+            <p><span className="text-violet-700">function</span> <span className="text-amber-700">build</span>() {"{"}</p>
             <p className="pl-5 text-muted">learnOneThing();</p>
-            <p className="pl-5 text-white/60">makeItReal();</p>
+            <p className="pl-5 text-muted">makeItReal();</p>
             <p>{"}"}</p>
             <div className="mt-5 flex items-center justify-between rounded-xl border border-accent-soft-strong bg-accent-soft px-3.5 py-3">
               <span className="text-muted">Start with one lesson</span>
