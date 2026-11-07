@@ -393,3 +393,19 @@ html:not(.dark) .dashboard-code-card .border-white\/10 { border-color: #e7eeea; 
 html:not(.dark) .dashboard-code-card .border-accent-2\/15 { border-color: #dceee9; }
 html:not(.dark) .dashboard-code-card .bg-accent-2\/\[0\.06\] { background: #f1f8f5; }
 html:not(.dark) .dashboard-code-card .text-accent-2 { color: #16776e; }
+
+
+/* Keep page headers readable in light mode; PageHero content uses light text. */
+html:not(.dark) .hero-surface:not(.dashboard-hero) {
+  color: #f3fbfa;
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(44, 190, 170, .22), transparent 25rem),
+    radial-gradient(ellipse at 92% 8%, rgba(89, 126, 216, .18), transparent 24rem),
+    linear-gradient(125deg, #0b1d26 0%, #12333c 58%, #143a3d 100%);
+  border-color: rgba(255,255,255,.12);
+  box-shadow: 0 22px 54px rgba(13, 42, 48, .16), inset 0 1px rgba(255,255,255,.08);
+}
+html:not(.dark) .hero-surface:not(.dashboard-hero)::before { opacity: .35; }
+html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white { color: #f3fbfa; }
+html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white\/68 { color: rgba(243,251,250,.76); }
+html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white\/52 { color: rgba(243,251,250,.68); }
