@@ -39,7 +39,7 @@ export function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
 
   return (
     <header className="rivo-header sticky top-0 z-30 flex h-[4rem] shrink-0 items-center justify-between border-b border-border/80 bg-background/80 px-4 backdrop-blur-xl md:px-8">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
         <button
           type="button"
           onClick={onOpenMenu}
@@ -88,10 +88,11 @@ export function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
         ) : status === "unauthenticated" ? (
           <Link
             href="/login"
+            aria-label={t("btn_sign_in")}
             className="flex h-9 items-center gap-1.5 rounded-xl bg-foreground px-3.5 text-xs font-semibold text-background transition-opacity hover:opacity-90"
           >
             <LogIn className="h-3.5 w-3.5" />
-            {t("btn_sign_in")}
+            <span className="hidden sm:inline">{t("btn_sign_in")}</span>
           </Link>
         ) : (
           <div className="h-9 w-9 animate-pulse rounded-xl bg-surface-raised" />
