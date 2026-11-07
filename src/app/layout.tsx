@@ -8,7 +8,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "RivoCode",
   description:
-    "RivoCode is a focused platform for learning programming through short lessons, hands-on practice, and real projects.",
+    "Lessons, practice, and projects for learning to code.",
   icons: {
     icon: "/rivocode-mark.svg",
     shortcut: "/rivocode-mark.svg",
@@ -19,9 +19,17 @@ export const metadata: Metadata = {
 const themeInitScript = `
 (function () {
   try {
-    var stored = localStorage.getItem("rivocode-theme-v2");
-    var theme = stored || "light";
-    if (theme === "dark") document.documentElement.classList.add("dark");
+    var key = "rivocode-theme-v2";
+    var migration = "rivocode-light-default-v1";
+    var stored = localStorage.getItem(key);
+    if (!localStorage.getItem(migration)) {
+      if (stored === "dark") {
+        stored = "light";
+        localStorage.setItem(key, "light");
+      }
+      localStorage.setItem(migration, "1");
+    }
+    if ((stored || "light") === "dark") document.documentElement.classList.add("dark");
   } catch (e) {}
 })();
 `;
