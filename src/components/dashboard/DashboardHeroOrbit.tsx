@@ -15,7 +15,7 @@ const BADGES = [
 
 export function DashboardHeroOrbit() {
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 hidden w-[50%] max-w-[460px] sm:block">
+    <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 hidden w-[50%] max-w-[460px] lg:block">
       <div className="hero-glow login-orb absolute right-16 top-1/2 h-72 w-72 -translate-y-1/2 bg-accent/[0.14]" />
       <div className="hero-glow login-orb-slow absolute right-52 top-10 h-44 w-44 bg-violet/[0.14]" />
 
