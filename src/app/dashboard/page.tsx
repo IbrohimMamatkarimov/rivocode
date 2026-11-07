@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BookOpen, CheckCircle2, Clock, Flame, Terminal, FolderKanban, Play, Braces } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CheckCircle2, Clock, Flame, Terminal, FolderKanban, Play, Braces } from "lucide-react";
 import { RobotMascot } from "@/components/companions/RobotMascot";
 import { AppShell } from "@/components/layout/AppShell";
 import { CodeWorkbench } from "@/components/dashboard/CodeWorkbench";
@@ -8,23 +8,21 @@ import { LanguageLogo } from "@/lib/language-logos";
 import { courses, challenges } from "@/lib/mock-data";
 import { useLanguage } from "@/components/theme/LanguageProvider";
 import { useLearningProgress } from "@/components/progress/LearningProgressProvider";
-import { useAuth } from "@/components/auth/AuthProvider";
 export default function DashboardPage(){
- const {t,lang}=useLanguage();const uz=lang==="uz";const {stats,weeklyActivity,getCourseProgress,isLessonComplete}=useLearningProgress();const {account,status}=useAuth();
+ const {t,lang}=useLanguage();const uz=lang==="uz";const {stats,weeklyActivity,getCourseProgress,isLessonComplete}=useLearningProgress();
  const started=courses.filter(course=>{const p=getCourseProgress(course);return p.completedLessons>0&&p.progress<100;});
  const current=started[0]||courses.find(course=>course.slug==="javascript-fundamentals")||courses[0];
  const progress=getCourseProgress(current);const next=current.sections.flatMap(section=>section.lessons).find(lesson=>!isLessonComplete(lesson.id));
- const name=status==="account"?account?.name?.split(" ")[0]:null;
  const maxMinutes=Math.max(1,...weeklyActivity.map(day=>day.minutes));
  const totalMinutes=weeklyActivity.reduce((sum,day)=>sum+day.minutes,0);
  const recommended=[current,...courses.filter(course=>course.id!==current.id)].slice(0,3);
  const challenge=challenges.find(item=>item.id==="fizz-buzz")||challenges[0];
  return <AppShell><div className="rivo-dashboard-v2">
  <section className="rivo-launchpad" onPointerMove={event=>{if(event.pointerType!=="mouse"||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;const b=event.currentTarget.getBoundingClientRect();event.currentTarget.style.setProperty("--stage-x",((event.clientX-b.left)/b.width-.5)*6+"deg");event.currentTarget.style.setProperty("--stage-y",(.5-(event.clientY-b.top)/b.height)*4+"deg");}}>
- <div className="rivo-launchpad__copy"><p><span/><Braces size={13}/>{uz?"G‘OYADAN KODGACHA":"FROM IDEA TO SOMETHING REAL"}</p><h1>{uz?"Kod yozing.\nNatijani ko‘ring.":"Write code.\nMake it real."}</h1><span>{name?(uz?`Xush kelibsiz, ${name}. Keyingi qadamingiz shu yerda.`:`Welcome back, ${name}. Your next step starts here.`):(uz?"Darsni davom ettiring, kodni sinab ko‘ring va o‘zingiz yarating.":"Continue a lesson, explore the code, and build something of your own.")}</span>
- <div className="rivo-launchpad__actions"><Link href={next?"/lessons/"+next.id:"/courses/"+current.slug}>{progress.completedLessons?t("btn_continue_learning"):t("btn_start_learning")}<ArrowRight size={15}/></Link><Link href="/courses">{t("btn_browse_courses")}<ArrowUpRight size={14}/></Link></div>
- <div className="rivo-launchpad__details"><span><BookOpen size={12}/>{courses.length} {uz?"ta kurs":"courses"}</span><i/><span><Terminal size={12}/>{uz?"Brauzerda mashq":"Browser-based practice"}</span></div></div>
- <div className="rivo-studio-scene" aria-hidden="true"><div className="rivo-stage-grid"/><span className="rivo-stage-orbit"/><span className="rivo-stage-orbit rivo-stage-orbit--two"/><div className="rivo-code-chip rivo-code-chip--html"><small><i/> index.html</small><code>&lt;main&gt;<span>your idea</span>&lt;/main&gt;</code></div><div className="rivo-code-chip rivo-code-chip--js"><small><i/> main.js</small><code><em>const</em> next = build();</code></div><div className="rivo-code-chip rivo-code-chip--css"><small><i/> style.css</small><code>border-radius: <span>16px</span>;</code></div><RobotMascot className="rivo-stage-bot"/><span className="rivo-stage-caption"><span/>Rivo · {uz?"Kod bo‘yicha hamrohingiz":"Your coding companion"}</span></div>
+ <div className="rivo-launchpad__copy"><p><span/><Braces size={13}/>{uz?"KOD MAYDONI":"CODE STUDIO"}</p><h1>{uz?"Keling, kod yozamiz.":"Let’s code."}</h1><span>{uz?"Bir dars. Bir yangi ko‘nikma.":"One lesson. One new skill."}</span>
+ <div className="rivo-launchpad__actions"><Link href={next?"/lessons/"+next.id:"/courses/"+current.slug}>{uz?(progress.completedLessons?"Davom etish":"Boshlash"):(progress.completedLessons?"Continue":"Start")}<ArrowRight size={15}/></Link><Link href="/courses">{uz?"Kurslar":"Courses"}<ArrowUpRight size={14}/></Link></div>
+</div>
+ <div className="rivo-studio-scene" aria-hidden="true"><div className="rivo-stage-grid"/><span className="rivo-stage-orbit"/><span className="rivo-stage-orbit rivo-stage-orbit--two"/><div className="rivo-code-chip rivo-code-chip--html"><small><i/> index.html</small><code>&lt;main&gt;<span>your idea</span>&lt;/main&gt;</code></div><div className="rivo-code-chip rivo-code-chip--js"><small><i/> main.js</small><code><em>const</em> next = build();</code></div><div className="rivo-code-chip rivo-code-chip--css"><small><i/> style.css</small><code>border-radius: <span>16px</span>;</code></div><RobotMascot className="rivo-stage-bot"/><span className="rivo-stage-caption"><span/>Rivo <code>&lt;/&gt;</code></span></div>
  </section>
  <div className="rivo-stat-rail">{[{icon:Flame,value:stats.streakDays,label:t("stat_streak")},{icon:CheckCircle2,value:stats.completedLessons,label:t("stat_lessons")},{icon:Clock,value:stats.hoursLearned,label:t("stat_hours")},{icon:FolderKanban,value:stats.projectsCompleted,label:t("stat_projects")}].map(item=><div key={item.label}><item.icon size={17}/><span><strong>{item.value}</strong><small>{item.label}</small></span></div>)}</div>
  <div className="rivo-workspace-columns"><div className="rivo-workspace-main">
