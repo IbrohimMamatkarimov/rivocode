@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { PointerEvent as ReactPointerEvent } from "react";
 import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import { useLanguage, type TranslationKey } from "@/components/theme/LanguageProvider";
 import { useAuth } from "@/components/auth/AuthProvider";
@@ -20,8 +21,19 @@ export function DashboardHero() {
   const firstName =
     status === "account" ? account?.name?.split(" ")[0] ?? account?.email?.split("@")[0] : undefined;
 
+  function trackPointer(event: ReactPointerEvent<HTMLElement>) {
+    if (event.pointerType !== "mouse") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    const x = (event.clientX - bounds.left) / bounds.width;
+    const y = (event.clientY - bounds.top) / bounds.height;
+    event.currentTarget.style.setProperty("--pointer-x", `${x * 100}%`);
+    event.currentTarget.style.setProperty("--pointer-y", `${y * 100}%`);
+    event.currentTarget.style.setProperty("--tilt-x", `${(0.5 - y) * 3}deg`);
+    event.currentTarget.style.setProperty("--tilt-y", `${(x - 0.5) * 5}deg`);
+  }
+
   return (
-    <section className="hero-surface dashboard-hero mb-7 overflow-hidden rounded-[2rem] border border-white/10 shadow-lg">
+    <section className="hero-surface dashboard-hero mb-7 overflow-hidden rounded-[2rem] border border-white/10 shadow-lg" onPointerMove={trackPointer}>
       <DashboardHeroOrbit />
       <div className="dashboard-hero__copy relative z-10">
         <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent-2/20 bg-accent-2/[0.08] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.15em] text-accent-2">
