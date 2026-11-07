@@ -55,8 +55,8 @@ export function Sidebar() {
               className={cn(
                 "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
                 active
-                  ? "bg-white/[0.12] text-white shadow-sm ring-1 ring-white/10"
-                  : "text-white/55 hover:bg-white/[0.06] hover:text-white"
+                  ? "relative bg-gradient-to-r from-accent/20 to-white/[0.08] text-white shadow-sm ring-1 ring-accent-2/20 before:absolute before:left-0 before:top-1/2 before:h-5 before:w-[3px] before:-translate-y-1/2 before:rounded-full before:bg-accent-2"
+                  : "text-white/55 hover:translate-x-0.5 hover:bg-white/[0.06] hover:text-white"
               )}
             >
               <Icon className={cn("h-4 w-4", active ? "text-accent-2" : "text-white/45 group-hover:text-white/80")} strokeWidth={2} />
@@ -77,8 +77,8 @@ export function Sidebar() {
               className={cn(
                 "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
                 active
-                  ? "bg-white/[0.12] text-white shadow-sm ring-1 ring-white/10"
-                  : "text-white/55 hover:bg-white/[0.06] hover:text-white"
+                  ? "relative bg-gradient-to-r from-accent/20 to-white/[0.08] text-white shadow-sm ring-1 ring-accent-2/20 before:absolute before:left-0 before:top-1/2 before:h-5 before:w-[3px] before:-translate-y-1/2 before:rounded-full before:bg-accent-2"
+                  : "text-white/55 hover:translate-x-0.5 hover:bg-white/[0.06] hover:text-white"
               )}
             >
               <Icon className={cn("h-4 w-4", active ? "text-accent-2" : "text-white/45 group-hover:text-white/80")} strokeWidth={2} />
