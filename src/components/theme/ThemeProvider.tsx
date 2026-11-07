@@ -19,9 +19,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
-    // Default to light (W3Schools-style) regardless of OS preference; only an
-    // explicit prior choice in this app switches it to dark.
+    const migrated = window.localStorage.getItem("rivocode-light-default-v1") === "1";
+    let stored = window.localStorage.getItem(THEME_STORAGE_KEY) as Theme | null;
+    if (!migrated) {
+      if (stored === "dark") {
+        stored = "light";
+        window.localStorage.setItem(THEME_STORAGE_KEY, "light");
+      }
+      window.localStorage.setItem("rivocode-light-default-v1", "1");
+    }
+    // Default to light while preserving a later manual theme choice.
     const initial = stored ?? "light";
     // eslint-disable-next-line react-hooks/set-state-in-effect -- reads browser-only APIs (localStorage/matchMedia) that are unavailable during SSR, so the real theme can only be known after mount
     setThemeState(initial);
