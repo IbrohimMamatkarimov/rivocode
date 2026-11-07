@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f4f7f8;
+  --background: #fbfdfc;
   --surface: #ffffff;
   --surface-raised: #f8fafb;
   --foreground: #10212b;
@@ -372,3 +372,24 @@ body {
 .dashboard-hero::after { background: radial-gradient(360px circle at var(--pointer-x) var(--pointer-y), rgba(46,212,197,.14), transparent 72%), linear-gradient(110deg, transparent 20%, rgba(255,255,255,.045) 50%, transparent 75%); }
 .dashboard-code-card { transform: perspective(1200px) rotateY(calc(-5deg + var(--tilt-y))) rotateX(calc(2deg + var(--tilt-x))); transition: transform 160ms ease-out; }
 @media (prefers-reduced-motion: reduce) { .dashboard-code-card { transform: none; transition: none; } }
+
+
+/* Give the learning workspace room to breathe. */
+html:not(.dark) body { background: #fff; }
+html:not(.dark) .hero-surface { color: var(--foreground); background: radial-gradient(ellipse at 8% 0%, rgb(35 155 133 / .075), transparent 26rem), linear-gradient(135deg, #fff, #fbfdfc); box-shadow: 0 10px 30px rgb(16 45 41 / .06); }
+html:not(.dark) .hero-surface::before { opacity: .75; background-image: radial-gradient(360px circle at var(--pointer-x, 70%) var(--pointer-y, 35%), rgb(24 133 113 / .09), transparent 72%); background-size: auto; mask-image: none; animation: none; }
+html:not(.dark) .dashboard-hero { border-color: #e2ebe7; }
+html:not(.dark) .gradient-text { background: none; color: #16776e; -webkit-text-fill-color: currentColor; }
+html:not(.dark) .dashboard-code-card { border-color: #e2ebe7; background: #fff; box-shadow: 0 16px 38px rgb(19 53 47 / .08); backdrop-filter: none; }
+html:not(.dark) .dashboard-code-card > div:first-child { border-color: #e9efec; }
+html:not(.dark) .dashboard-code-card .text-violet-700 { color: #7552a8; }
+html:not(.dark) .dashboard-code-card .text-sky-700 { color: #236c9b; }
+html:not(.dark) .dashboard-code-card .text-emerald-700 { color: #187344; }
+html:not(.dark) .dashboard-code-card .text-amber-700 { color: #93651d; }
+html:not(.dark) .dashboard-code-card .text-white\/60,
+html:not(.dark) .dashboard-code-card .text-white\/45,
+html:not(.dark) .dashboard-code-card .text-white\/65 { color: #697a75; }
+html:not(.dark) .dashboard-code-card .border-white\/10 { border-color: #e7eeea; }
+html:not(.dark) .dashboard-code-card .border-accent-2\/15 { border-color: #dceee9; }
+html:not(.dark) .dashboard-code-card .bg-accent-2\/\[0\.06\] { background: #f1f8f5; }
+html:not(.dark) .dashboard-code-card .text-accent-2 { color: #16776e; }
