@@ -1,3 +1,4 @@
+import { StudioMotion } from "@/components/StudioMotion";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { LanguageProvider } from "@/components/theme/LanguageProvider";
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="antialiased">
+        <StudioMotion />
         <ThemeProvider>
           <LanguageProvider>
             <AuthProvider><LearningProgressProvider>{children}</LearningProgressProvider></AuthProvider>

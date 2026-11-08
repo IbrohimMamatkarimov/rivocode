@@ -531,3 +531,45 @@ html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white\/52 { color: rgba
 @media(max-width:900px){.rivo-launchpad h1{font-size:38px}.rivo-stat-rail>div>svg{display:none}.rivo-resume-card--visual{grid-template-columns:180px minmax(0,1fr)}}
 @media(max-width:600px){.rivo-launchpad{grid-template-columns:1fr;padding:25px 22px 18px;min-height:0;gap:5px;border-radius:20px}.rivo-launchpad h1{font-size:38px;margin-top:18px}.rivo-launchpad__copy>span{font-size:11px;max-width:39ch;line-height:1.7}.rivo-launchpad__actions{gap:13px;margin-top:19px}.rivo-launchpad__actions>a:first-child{padding:11px 13px;font-size:10px}.rivo-launchpad__actions>a:last-child{font-size:9px}.rivo-launchpad__details{font-size:8px;margin-top:18px}.rivo-studio-scene{height:225px;margin-top:5px;width:100%;max-width:300px;justify-self:center}.rivo-stage-bot{width:130px!important;height:150px!important}.rivo-code-chip{padding:8px 10px}.rivo-code-chip code{font-size:8px}.rivo-code-chip--html{top:7px;left:-2px}.rivo-code-chip--js{top:50px;right:-3px}.rivo-code-chip--css{bottom:28px;left:0}.rivo-stage-caption{font-size:7px;right:0}.rivo-stage-orbit{width:190px;height:190px}.rivo-stage-orbit--two{width:230px;height:230px}.rivo-stage-grid{width:210px;height:100px}.rivo-stat-rail{gap:9px}.rivo-stat-rail>div{padding:13px 16px;border:1px solid #d9e8e1!important}.rivo-stat-rail>div>svg{display:block;width:29px;height:29px;padding:5px}.rivo-resume-card--visual{grid-template-columns:1fr;padding:0}.rivo-course-cover{min-height:150px;max-height:160px}.rivo-resume-details{padding:19px}.rivo-resume-card--visual .rivo-resume-card__content>div{min-width:0}.rivo-shelf-card{min-height:0}.rivo-shelf-card h3{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.rivo-code-chip{animation:none}.rivo-studio-scene{transform:none!important;transition:none}.rivo-launchpad__actions>a:first-child:hover,.rivo-course-cover:hover img{transform:none}}
+
+
+/* Motion uses transforms and opacity; content remains visible without JavaScript. */
+.studio-reveal{opacity:0;translate:0 16px;transition:opacity .65s cubic-bezier(.22,1,.36,1) var(--reveal-delay,0ms),translate .65s cubic-bezier(.22,1,.36,1) var(--reveal-delay,0ms)}
+.studio-reveal.studio-visible{opacity:1;translate:0 0}
+.studio-lit{background-image:radial-gradient(360px circle at var(--light-x) var(--light-y),#91d9ff18,transparent 75%)}
+:is(.rivo-shelf-card,.study-shortcuts>a,.mock-card){transition:transform .32s cubic-bezier(.22,1,.36,1),border-color .25s,box-shadow .32s}
+@media(hover:hover){:is(.rivo-shelf-card,.study-shortcuts>a,.mock-card):hover{transform:translateY(-5px);box-shadow:0 18px 34px #152e5114}
+:is(.rivo-shelf-card,.study-shortcuts>a,.mock-card):hover svg:last-child{transform:translate(2px,-2px)}
+}
+:is(.rivo-app,.app-shell) a:focus-visible,:is(.rivo-app,.app-shell) button:focus-visible{outline:3px solid #6da7e8;outline-offset:4px}
+:is(.rivo-app,.app-shell) a svg,:is(.rivo-app,.app-shell) button svg{transition:transform .25s cubic-bezier(.22,1,.36,1)}
+@media(prefers-reduced-motion:reduce){.studio-reveal{opacity:1;translate:none;transition:none}:is(.rivo-shelf-card,.study-shortcuts>a,.mock-card):hover{transform:none}.studio-lit{background-image:none}}
+
+/* Studio proportions and course artwork */
+.rivo-dashboard-v2{gap:22px;max-width:1440px;margin-inline:auto}
+.rivo-launchpad{min-height:272px;padding:24px 32px;border-radius:20px;background:radial-gradient(ellipse at 80% 0,#205c68,transparent 62%),linear-gradient(120deg,#102630,#143b42)}
+.rivo-launchpad h1{font-size:clamp(2.2rem,3.5vw,3.25rem)}
+.rivo-studio-scene{height:230px}.rivo-stage-bot{width:156px!important;height:174px!important}
+.rivo-stage-orbit{border-color:#a6e9d733}.rivo-stage-orbit--two{animation:studio-orbit 36s linear infinite}
+.rivo-launchpad__copy>span{font-size:13px}.rivo-launchpad__actions>a{font-size:12px!important}
+.rivo-stat-rail{gap:1px;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--border)}
+.rivo-stat-rail>div:nth-child(n){background:var(--surface);border:0!important;border-radius:0;padding:15px 20px}
+.rivo-stat-rail strong{font-size:24px}.rivo-stat-rail small{font-size:11px}
+.rivo-section-heading h2{font-size:22px;letter-spacing:-.04em}.rivo-eyebrow{font-size:10px}
+.rivo-shelf-grid{gap:16px}
+.rivo-shelf-card:nth-child(n){isolation:isolate;min-height:225px;padding:24px 22px;border-radius:18px;color:#eef8f6;background-color:#142e36;border-color:#31515b;background-image:radial-gradient(ellipse at 100% 0,#275a65,transparent 75%)}
+.rivo-shelf-card:nth-child(2){background-color:#34291f;background-image:radial-gradient(ellipse at 100% 0,#6e4c2b,transparent 75%);border-color:#715737}
+.rivo-shelf-card:nth-child(3){background-color:#202e4a;background-image:radial-gradient(ellipse at 100% 0,#3d4b83,transparent 75%);border-color:#485b89}
+.rivo-shelf-card::after{content:"{ }";font:700 86px/1 ui-monospace,monospace;border:0;box-shadow:none;border-radius:0;right:8px;top:17px;width:auto;height:auto;color:#b0e7db12;z-index:-1}
+.rivo-shelf-card:nth-child(2)::after{content:"< >";color:#ffcf8316}.rivo-shelf-card:nth-child(3)::after{content:"⚛";color:#a6c0ff20}
+.rivo-shelf-card h3{font-size:16px;margin-top:30px;letter-spacing:-.025em;color:#f1f6f6}.rivo-shelf-card p,.rivo-shelf-card>small{font-size:11px;color:#a7c2c8}
+.rivo-shelf-card:nth-child(2) p,.rivo-shelf-card:nth-child(2)>small{color:#d4bf9c}
+.rivo-shelf-track{background:#ffffff15;height:4px}.rivo-shelf-track i{background:#9be7d2}
+.rivo-workbench{box-shadow:0 14px 30px #102c3610;border-color:#b9d4d4}
+.rivo-activity-card{background:linear-gradient(145deg,var(--surface),var(--accent-soft));border-radius:18px}
+.rivo-activity-chart i{transition:height .8s cubic-bezier(.22,1,.36,1)}
+.rivo-challenge-card h2{font-size:25px;letter-spacing:-.04em}
+.rivo-sidebar nav a{transition:background .2s,color .2s,transform .25s}.rivo-sidebar nav a:hover{transform:translateX(3px)}
+@keyframes studio-orbit{to{rotate:360deg}}
+@media(max-width:600px){.rivo-launchpad{padding:24px;min-height:0}.rivo-studio-scene{height:205px}.rivo-launchpad h1{font-size:36px}.rivo-shelf-card:nth-child(n){min-height:145px;padding:20px;display:block}.rivo-shelf-card h3{margin-top:16px}.rivo-shelf-card>div{display:flex;justify-content:space-between}.rivo-shelf-card::after{font-size:100px;right:20px}.rivo-stat-rail{gap:1px}.rivo-stat-rail>div:nth-child(n){padding:14px}.rivo-section-heading h2{font-size:19px}}
+@media(prefers-reduced-motion:reduce){.rivo-stage-orbit--two{animation:none}.rivo-sidebar nav a:hover{transform:none}}
