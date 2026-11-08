@@ -643,3 +643,39 @@ html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white\/52 { color: rgba
 .rivo-shelf-card:nth-child(n) :is(p,small){color:#bdd8cb}.rivo-challenge-card{background:#e6f1e9;border-color:#c5decd;color:#234a39}
 .rivo-stat-rail>div>svg{color:#418a71!important}.rivo-workbench{border-color:#c9ddd4}
 .dark .rivo-app{background:#112521}.dark .rivo-challenge-card{background:#203d31;color:#d9eddf;border-color:#3c614d}
+
+/* Companions animate in place and remain easy to click. */
+:is(.rivo-tutor-trigger,.companion-launch--robot){animation:none!important;translate:none!important;will-change:auto}
+:is(.rivo-tutor-trigger,.companion-launch--robot) .brand-mascot :is(.code-float,.brain-float){animation:brand-hover 5s ease-in-out infinite!important}
+:is(.rivo-tutor-trigger,.companion-launch--robot) .bot-leg-left,:is(.rivo-tutor-trigger,.companion-launch--robot) .bot-leg-right{animation:none!important;transform:none!important}
+.brand-mascot[data-action=walk] :is(.code-float,.brain-float){animation:bot-bob 1.5s ease-in-out 2 alternate!important}
+.brand-mascot[data-action=walk] :is(.bot-leg-left,.bot-leg-right){animation:none!important;transform:none!important}
+@media(prefers-reduced-motion:reduce){:is(.rivo-tutor-trigger,.companion-launch--robot) .brand-mascot *{animation:none!important}}
+
+/* Slate-blue studio: one restrained palette throughout. */
+:root{--accent:#4169b2;--accent-hover:#335591;--accent-soft:#edf2fc;--accent-soft-strong:#d9e5fa;--accent-2:#a8c3fa;--accent-3:#3d5f98;--ink:#17243a;--ink-2:#233650}
+.rivo-app{--accent:#4169b2;--accent-hover:#335591;--accent-soft:#edf2fc;--accent-2:#b5ccf6;background:radial-gradient(ellipse at 100% 0,#e7edf9,transparent 50%),#f7f9fc}
+.rivo-sidebar{background:linear-gradient(180deg,#1d2c43,#162337)!important;border-color:#344762}
+.rivo-sidebar nav>p{color:#91a4c0}.rivo-sidebar a.group{color:#aab9ce}
+.rivo-sidebar a.group>svg{color:#9fb5d4;background:#ffffff05;border-color:#91acd024}
+.rivo-sidebar a.group[aria-current=page]{background:linear-gradient(100deg,#80a7ed28,#80a7ed0b);border-color:#8aade64d;color:#f1f5ff}
+.rivo-sidebar a.group[aria-current=page]>svg{background:#bed2fa;border-color:#d2e1ff;color:#294d86}
+.rivo-sidebar a.group[aria-current=page]::after{background:#bed2fa}.rivo-sidebar a.group:hover{background:#91b3eb15}
+.rivo-launchpad{background:radial-gradient(ellipse at 90% 0,#4a6796,transparent 70%),linear-gradient(115deg,#1e2d46,#304867);border-color:#5f789c;box-shadow:0 14px 35px #233d5c14}
+.rivo-launchpad h1{color:#f4f7ff}.rivo-launchpad__copy>p{color:#b9cae8}.rivo-launchpad__copy>span{color:#c1cde0}
+.rivo-launchpad__copy>p>span{background:#b8cef3;box-shadow:0 0 0 4px #b8cef310}
+.rivo-launchpad::after{background-image:linear-gradient(#c7d5ff08 1px,transparent 1px),linear-gradient(90deg,#c7d5ff08 1px,transparent 1px)}
+.rivo-launchpad__actions>a:first-child{background:#d4e1fa;border-color:#e9f0ff;color:#294775}.rivo-launchpad__actions>a:first-child:hover{background:#ecf2ff}.rivo-launchpad__actions>a:last-child{color:#dce6f6}
+.rivo-code-chip{background:#263b57;border-color:#9eb5da40}.rivo-code-chip small{color:#a7bddb}.rivo-code-chip code{color:#dce7f8}.rivo-code-chip code span{color:#bfd2fa}
+.rivo-stage-caption{background:#263b57;border-color:#9eb5da40;color:#c1d1e7}
+.rivo-stage-grid{border-color:#a8bfe033;background-image:linear-gradient(#b0c4e31a 1px,transparent 1px),linear-gradient(90deg,#b0c4e31a 1px,transparent 1px)}.rivo-stage-orbit{border-color:#becfff25}
+.rivo-shelf-card:nth-child(n){background:linear-gradient(140deg,#263953,#405b7e);border-color:#637d9f}
+.rivo-shelf-card:nth-child(2){background:linear-gradient(140deg,#2e405d,#526888)}.rivo-shelf-card:nth-child(3){background:linear-gradient(140deg,#23334e,#394f74)}
+.rivo-shelf-card:nth-child(n) :is(p,small){color:#c1cee2}.rivo-shelf-track i{background:#afcafa}
+.rivo-stat-rail>div>svg{color:#5b7cab!important}
+.rivo-challenge-card{background:linear-gradient(145deg,#f1f5fc,#e3ebf8);border-color:#ccdaef;color:#294568}
+.rivo-challenge-icon{background:#d7e4f8;color:#4d71a8}.rivo-workbench{border-color:#cbd7e9}
+.rivo-workbench>header{background:linear-gradient(110deg,#fff,#f1f5fb)}
+.rivo-cover-play{color:#355985;background:#e8f0ffeb}.rivo-resume-card{border-color:#cfdaeb}
+.rivo-tutor-panel>header{background:#253c5c}.rivo-tutor-trigger::after{background:#4269a2}
+.dark .rivo-app{background:#152236;--accent-soft:#263b58}.dark .rivo-challenge-card{background:#243954;color:#dfe8f7;border-color:#405b7c}.dark .rivo-workbench>header{background:#1e3049}
