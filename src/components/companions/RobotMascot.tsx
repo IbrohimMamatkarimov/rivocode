@@ -1,11 +1,24 @@
 "use client";
-import { useId } from "react";
+import { useId, useEffect, useRef, useState } from "react";
 export function RobotMascot({mood="idle",className=""}:{mood?:"idle"|"thinking"|"happy"|"error";tone?:"blue"|"forest";className?:string}){
  const id=useId().replace(/:/g,"");
- return <span className={"robot-mascot brand-mascot code-mascot "+className} data-mood={mood} aria-hidden="true"><svg viewBox="0 0 160 170" fill="none">
+
+ const host=useRef<HTMLSpanElement>(null);
+ const [action,setAction]=useState("idle");
+ useEffect(()=>{
+  const el=host.current;if(!el)return;
+  const motion=window.matchMedia("(prefers-reduced-motion: reduce)");
+  if(motion.matches)return;
+  let visible=false;let step=0;
+  const sequence=["look","walk","wave","idle","happy","idle"];
+  const observer=new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;},{threshold:.2});observer.observe(el);
+  const timer=window.setInterval(()=>{if(visible&&!document.hidden){setAction(sequence[step%sequence.length]);step++;}},4200);
+  return()=>{clearInterval(timer);observer.disconnect();};
+ },[]);
+ return <span ref={host} data-action={mood==="idle"?action:mood} onPointerEnter={()=>setAction("wave")} onPointerLeave={()=>setAction("idle")} className={"robot-mascot brand-mascot code-mascot "+className} data-mood={mood} aria-hidden="true"><svg viewBox="0 0 160 170" fill="none">
  <defs><linearGradient id={id+"case"} x1="30" y1="31" x2="126" y2="142" gradientUnits="userSpaceOnUse"><stop stopColor="#b5e9e3"/><stop offset="1" stopColor="#58a8a5"/></linearGradient></defs>
  <ellipse cx="80" cy="161" rx="36" ry="5" fill="#104e4a" opacity=".12"/>
- <g className="code-float"><path d="M62 142v11M99 142v11" stroke="#43847f" strokeWidth="9" strokeLinecap="round"/><path d="M52 155h18M91 155h18" stroke="#afdcd5" strokeWidth="9" strokeLinecap="round"/>
+ <g className="code-float"><g className="bot-leg-left"><path d="M62 142v11" stroke="#43847f" strokeWidth="9" strokeLinecap="round"/><path d="M52 155h18" stroke="#afdcd5" strokeWidth="9" strokeLinecap="round"/></g><g className="bot-leg-right"><path d="M99 142v11" stroke="#43847f" strokeWidth="9" strokeLinecap="round"/><path d="M91 155h18" stroke="#afdcd5" strokeWidth="9" strokeLinecap="round"/></g>
  <rect x="47" y="103" width="66" height="42" rx="12" fill={"url(#"+id+"case)"} stroke="#438c89"/>
  <rect x="58" y="112" width="44" height="24" rx="5" fill="#125451"/><circle cx="80" cy="124" r="8" fill="#7be2c1" opacity=".12"/><circle cx="80" cy="124" r="5" stroke="#91e7cc" strokeWidth="1.3"/><circle cx="80" cy="124" r="2.5" fill="#b9ffe4"/><path d="M63 121h4m-4 4h4m26-4h4m-4 4h4" stroke="#64b8a7" strokeWidth="1.3" strokeLinecap="round"/>
  <path d="M51 111h4m-4 5h4m-4 5h4M105 111h4m-4 5h4m-4 5h4" stroke="#d5fff0" strokeWidth="1.3" opacity=".7"/>

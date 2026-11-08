@@ -573,3 +573,39 @@ html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white\/52 { color: rgba
 @keyframes studio-orbit{to{rotate:360deg}}
 @media(max-width:600px){.rivo-launchpad{padding:24px;min-height:0}.rivo-studio-scene{height:205px}.rivo-launchpad h1{font-size:36px}.rivo-shelf-card:nth-child(n){min-height:145px;padding:20px;display:block}.rivo-shelf-card h3{margin-top:16px}.rivo-shelf-card>div{display:flex;justify-content:space-between}.rivo-shelf-card::after{font-size:100px;right:20px}.rivo-stat-rail{gap:1px}.rivo-stat-rail>div:nth-child(n){padding:14px}.rivo-section-heading h2{font-size:19px}}
 @media(prefers-reduced-motion:reduce){.rivo-stage-orbit--two{animation:none}.rivo-sidebar nav a:hover{transform:none}}
+
+/* Articulated, bounded character motion. Never moves the help button. */
+.brand-mascot{--bot-spring:cubic-bezier(.22,1,.36,1)}
+.brand-mascot .bot-leg-left,.brand-mascot .bot-leg-right{transform-box:fill-box;transform-origin:50% 0}
+.brand-mascot[data-action=walk] :is(.code-float,.brain-float){animation:bot-stroll 4.2s var(--bot-spring) both!important}
+.brand-mascot[data-action=walk] .bot-leg-left{animation:bot-step .48s ease-in-out 8 alternate}
+.brand-mascot[data-action=walk] .bot-leg-right{animation:bot-step .48s ease-in-out -.24s 8 alternate-reverse}
+.brand-mascot[data-action=walk] :is(.code-head,.brain-head){animation:bot-bob .48s ease-in-out 8 alternate!important}
+.brand-mascot[data-action=wave] :is(.code-wave,.brain-wave){transform-box:fill-box;transform-origin:20% 90%;animation:bot-greet .65s ease-in-out 4!important}
+.brand-mascot[data-action=look] :is(.brand-eyes,.code-bracket-eyes){animation:bot-look 3.6s ease-in-out both!important}
+.brand-mascot[data-action=happy] :is(.code-float,.brain-float){animation:bot-hop 1.1s var(--bot-spring) 2!important}
+.brand-mascot[data-action=happy] .brain-signals{animation:bot-signal .5s ease-in-out 4 alternate}
+.brand-mascot[data-action=thinking] :is(.code-head,.brain-head){animation:bot-think 2s ease-in-out infinite!important}
+@keyframes bot-stroll{0%,100%{transform:translateX(0) rotate(0)}20%{transform:translateX(-12px) rotate(-3deg)}48%{transform:translateX(0) rotate(0)}75%{transform:translateX(12px) rotate(3deg)}}
+@keyframes bot-step{from{transform:rotate(-16deg) translateY(-1px)}to{transform:rotate(16deg) translateY(-4px)}}
+@keyframes bot-bob{to{transform:translateY(-3px) rotate(1.5deg)}}
+@keyframes bot-greet{0%,100%{transform:rotate(0)}35%{transform:rotate(-22deg)}70%{transform:rotate(12deg)}}
+@keyframes bot-look{0%,100%{transform:translateX(0)}25%,40%{transform:translateX(-4px)}65%,80%{transform:translateX(4px)}}
+@keyframes bot-hop{0%,100%{transform:translateY(0)}20%{transform:translateY(2px) scaleY(.98)}48%{transform:translateY(-10px) rotate(-3deg)}75%{transform:translateY(1px)}}
+@keyframes bot-signal{to{opacity:.4}}
+@keyframes bot-think{50%{transform:rotate(-5deg) translateY(-2px)}}
+@media(prefers-reduced-motion:reduce){.brand-mascot[data-action] *{animation:none!important;transform:none!important}}
+
+/* Ink, electric periwinkle and warm apricot. */
+.rivo-launchpad{background:radial-gradient(ellipse at 90% 0,#5754a0,transparent 65%),linear-gradient(115deg,#18243b,#2b345b);border-color:#566184}
+.rivo-launchpad::after{background-image:linear-gradient(#c7d5ff08 1px,transparent 1px),linear-gradient(90deg,#c7d5ff08 1px,transparent 1px)}
+.rivo-launchpad__copy>p{color:#b9c8ff}.rivo-launchpad__copy>span{color:#b9c5dd}
+.rivo-launchpad__actions>a:first-child{background:#ffd2ab;border-color:#ffe5ce;color:#3e3029}.rivo-launchpad__actions>a:first-child:hover{background:#ffe6cb}
+.rivo-code-chip{background:#202d4b;border-color:#7986ba55}.rivo-code-chip small{color:#a5b5e2}.rivo-code-chip code{color:#d6dff6}
+.rivo-code-chip code span{color:#ffd2ab}.rivo-stage-caption{background:#202d4b;border-color:#7986ba55;color:#c0cae5}
+.rivo-stage-grid{border-color:#a6b8f533;background-image:linear-gradient(#a7b5e81a 1px,transparent 1px),linear-gradient(90deg,#a7b5e81a 1px,transparent 1px)}
+.rivo-stage-orbit{border-color:#becbff25}
+.rivo-shelf-card:first-child{background-color:#242d4c;background-image:radial-gradient(ellipse at 100% 0,#50578b,transparent 80%);border-color:#515f91}
+.rivo-sidebar{background:#182539}.rivo-sidebar nav a:hover{background:#a6b7ff16}
+.rivo-workbench{border-color:#bac5e0}.rivo-challenge-card{background:radial-gradient(ellipse at 100% 0,#f5d4b7,transparent 80%),#fcf1e5;border-color:#edd9c3;color:#47372d}
+.dark .rivo-challenge-card{background:#332b30;border-color:#695347;color:#f8e6d7}
