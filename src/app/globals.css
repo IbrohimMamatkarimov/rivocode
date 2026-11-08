@@ -679,3 +679,10 @@ html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white\/52 { color: rgba
 .rivo-cover-play{color:#355985;background:#e8f0ffeb}.rivo-resume-card{border-color:#cfdaeb}
 .rivo-tutor-panel>header{background:#253c5c}.rivo-tutor-trigger::after{background:#4269a2}
 .dark .rivo-app{background:#152236;--accent-soft:#263b58}.dark .rivo-challenge-card{background:#243954;color:#dfe8f7;border-color:#405b7c}.dark .rivo-workbench>header{background:#1e3049}
+
+.rivo-editor{background:#1b2a42;color:#e2e9f5}.rivo-editor-tabs{background:#243650;border-color:#3e5576}.rivo-editor-tabs>button{color:#a3b5cf}.rivo-editor-tabs>button[aria-selected=true]{color:#eff4ff}.rivo-editor-tabs>button[aria-selected=true]>span{background:#9bbcf0}
+.rivo-editor-file{color:#9fb5d5}.rivo-editor-file>span:first-child{background:#9fbfee}
+.rivo-editor-footer{border-color:#3b5272}.rivo-editor-footer>button{background:#37557e;border-color:#5676a3;color:#e4eeff}.rivo-editor-footer>a{color:#b8cbe6}
+.rivo-editor-output{background:#17253b;border-color:#3b5272}.rivo-editor-output pre{color:#c3d8f7}
+.rivo-activity-card{background:linear-gradient(145deg,var(--surface),#edf2fb)}
+.dark .rivo-activity-card{background:#21334d}
