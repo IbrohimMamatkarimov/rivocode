@@ -32,13 +32,20 @@ export async function POST(request: NextRequest) {
     `Learner question:\n${question}`,
   ].join("\n\n");
   try {
-    const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
+    const preferred = process.env.GEMINI_MODEL || "gemini-flash-latest";
+    let response: Response | undefined;
+    for (const model of [...new Set([preferred, "gemini-flash-lite-latest"])]) {
+      response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
       body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 700, temperature: 0.35 } }),
       signal: AbortSignal.timeout(20_000),
-    });
-    if (!response.ok) return NextResponse.json({ error: "Learning help is temporarily unavailable." }, { status: 502 });
+      });
+      if (response.ok || ![404, 503].includes(response.status)) break;
+    }
+    if (!response || !response.ok) {
+      if (response?.status === 429) return NextResponse.json({ error: "AI xizmatining limiti vaqtincha to‘ldi. Birozdan keyin urinib ko‘ring." }, { status: 429 });
+      return NextResponse.json({ error: "Learning help is temporarily unavailable." }, { status: 502 });
+    }
     const data = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
     const answer = data.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("").trim();
     if (!answer) return NextResponse.json({ error: "Learning help did not return an answer. Try again." }, { status: 502 });
