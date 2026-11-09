@@ -6,6 +6,14 @@ const WINDOW_MS = 10 * 60 * 1000;
 const MAX_REQUESTS = 12;
 const hits = new Map<string, { count: number; resetAt: number }>();
 
+
+function offlineCodingHelp(question: string) {
+  const q = question.toLowerCase();
+  if (/(variable|const|let|var)/.test(q)) return "A variable is a named place for a value. Start with const when the value will not change: const score = 10. Use let only when you plan to assign a new value later. Try creating one variable for a name or score, then log it with console.log(...).";
+  if (/(error|bug|debug)/.test(q)) return "Debug one step at a time:\n\n1. Read the first error message exactly.\n2. Find the line number it names.\n3. Check spelling, brackets, quotes, and variable names.\n4. Add console.log(...) just before that line to inspect the value.\n\nShare the error and the smallest code sample, and I’ll help you narrow it down.";
+  return "Let’s make this smaller: tell me the language you are using, what you expected to happen, and what happened instead. I’ll help you choose the next coding step.";
+}
+
 function allowed(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const now = Date.now();
@@ -44,12 +52,12 @@ export async function POST(request: NextRequest) {
     }
     if (!response || !response.ok) {
       if (response?.status === 429) return NextResponse.json({ error: "AI xizmatining limiti vaqtincha to‘ldi. Birozdan keyin urinib ko‘ring." }, { status: 429 });
-      return NextResponse.json({ error: "Learning help is temporarily unavailable." }, { status: 502 });
+      return NextResponse.json({ answer: offlineCodingHelp(question), fallback: true });
     }
     const data = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
     const answer = data.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("").trim();
-    if (!answer) return NextResponse.json({ error: "Learning help did not return an answer. Try again." }, { status: 502 });
+    if (!answer) return NextResponse.json({ answer: offlineCodingHelp(question), fallback: true });
     return NextResponse.json({ answer });
-  } catch { return NextResponse.json({ error: "Learning help is temporarily unavailable." }, { status: 502 }); }
+  } catch { return NextResponse.json({ answer: offlineCodingHelp(question), fallback: true }); }
 }
 
