@@ -1,4 +1,5 @@
 "use client";
+import {useChatDrag} from "@/components/useChatDrag";
 import { createPortal } from "react-dom";
 import { UzbekVoice } from "@/components/UzbekVoice";
 import { useEffect, useRef, useState } from "react";
@@ -14,6 +15,7 @@ function TutorAnswer({ value }: { value: string }) {
 }
 
 export function RivoCompanion(){
+ const chatDrag=useChatDrag();
  const [mounted,setMounted]=useState(false);useEffect(()=>setMounted(true),[]);
  const {lang}=useLanguage();const uz=lang==="uz";const pathname=usePathname();
  const [open,setOpen]=useState(false);const [question,setQuestion]=useState("");const [sentQuestion,setSentQuestion]=useState("");const [answer,setAnswer]=useState("");const [error,setError]=useState("");const [loading,setLoading]=useState(false);
@@ -33,7 +35,7 @@ export function RivoCompanion(){
  if(!mounted)return null;
  return createPortal(<><button ref={button} type="button" className="rivo-tutor-trigger" aria-expanded={open} aria-controls="rivo-tutor" onClick={()=>setOpen(value=>!value)}><img className="rivo-byte-art" src={BYTE_AVATAR} alt="" aria-hidden="true"/><span><strong>Byte</strong><small>{uz?"Sizning kod yo‘l ko‘rsatuvchingiz":"Your coding guide"}</small></span></button>
  {open&&<section id="rivo-tutor" role="dialog" aria-label="Rivo coding companion" className="rivo-tutor-panel"><header><img className="rivo-byte-art" src={BYTE_AVATAR} alt=""/><div><h2>{uz?"Byte bilan birga o‘rganing":"Figure it out with Byte"}</h2><p>{uz?"Bir vaqtning o‘zida bitta tushuncha.":"One concept at a time."}</p></div><button type="button" aria-label={uz?"Yopish":"Close assistant"} onClick={()=>{setOpen(false);button.current?.focus();}}><X size={17}/></button></header>
- <div className="rivo-tutor-body">{sentQuestion&&<p className="mb-3 ml-6 rounded-2xl bg-slate-100 px-4 py-3" aria-label={uz?"Yuborilgan savol":"Sent question"}>{sentQuestion}</p>}<p>{uz?"Salom! Nima ustida ishlayapsiz? Kodni yoki savolingizni yuboring, keyingi qadamni birga tushunamiz.":"Hey! What are you working on? Share the code or concept that’s confusing you, and we’ll find the next small step."}</p><div>{ideas.map(idea=><button key={idea} type="button" onClick={()=>{void ask(idea);}}>{idea}<ArrowRight size={11}/></button>)}</div><div aria-live="polite" aria-busy={loading}>{loading&&<p>{uz?"O‘ylayapman…":"Thinking it through…"}</p>}{answer&&<TutorAnswer value={answer}/>}</div>{error&&<p role="alert" className="text-danger">{error}</p>}<small>{uz?"Savolingiz va kurs konteksti Google Gemini xizmatiga yuboriladi. Javobni tekshiring.":"Your message and course context are sent to Google Gemini. Check the reasoning."}</small></div>
+ <div {...chatDrag} tabIndex={0} className="rivo-tutor-body">{sentQuestion&&<p className="mb-3 ml-6 rounded-2xl bg-slate-100 px-4 py-3" aria-label={uz?"Yuborilgan savol":"Sent question"}>{sentQuestion}</p>}<p>{uz?"Salom! Nima ustida ishlayapsiz? Kodni yoki savolingizni yuboring, keyingi qadamni birga tushunamiz.":"Hey! What are you working on? Share the code or concept that’s confusing you, and we’ll find the next small step."}</p><div>{ideas.map(idea=><button key={idea} type="button" onClick={()=>{void ask(idea);}}>{idea}<ArrowRight size={11}/></button>)}</div><div aria-live="polite" aria-busy={loading}>{loading&&<p>{uz?"O‘ylayapman…":"Thinking it through…"}</p>}{answer&&<TutorAnswer value={answer}/>}</div>{error&&<p role="alert" className="text-danger">{error}</p>}<small>{uz?"Savolingiz va kurs konteksti Google Gemini xizmatiga yuboriladi. Javobni tekshiring.":"Your message and course context are sent to Google Gemini. Check the reasoning."}</small></div>
  <UzbekVoice language={lang} answer={answer} onText={setQuestion}/><form onSubmit={event=>{event.preventDefault();void ask();}}><textarea ref={input} value={question} onChange={event=>setQuestion(event.target.value)} onKeyDown={event=>{if(event.key==="Enter"&&!event.shiftKey&&!event.nativeEvent.isComposing&&!event.repeat){event.preventDefault();void ask();}}} maxLength={2000} placeholder={uz?"Qayerda qiynaldingiz?":"Where are you stuck?"} aria-label={uz?"Savolingiz":"Your question"}/><button type="submit" aria-label={uz?"Yuborish":"Send question"} disabled={loading||!question.trim()}><Send size={16}/></button></form>
  </section>}</>,document.body);
 }
