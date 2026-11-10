@@ -501,13 +501,13 @@ interface LanguageContextValue {
 const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
+  const [lang, setLangState] = useState<Lang>("uz");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const stored = window.localStorage.getItem(LANG_STORAGE_KEY) as Lang | null;
     // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage is unavailable during SSR, so the real language can only be known after mount
-    setLangState(stored === "uz" ? "uz" : "en");
+    setLangState(stored === "en" ? "en" : "uz");
     setMounted(true);
   }, []);
 
