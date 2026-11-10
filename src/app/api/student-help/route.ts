@@ -36,14 +36,15 @@ export async function POST(request: NextRequest) {
   ].join("\n\n");
   try {
     const preferred = "gemini-flash-lite-latest";
+    const deadline = AbortSignal.timeout(18_000);
     let response: Response | undefined;
-    for (const model of [...new Set([preferred, "gemini-flash-lite-latest"])]) {
+    for (const model of [...new Set([preferred, process.env.GEMINI_MODEL || "gemini-flash-latest"])]) {
       response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
       body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 700, temperature: 0.35 } }),
-      signal: AbortSignal.timeout(18_000),
+      signal: deadline,
       });
-      if (response.ok || ![404, 503].includes(response.status)) break;
+      if (response.ok || ![404, 429, 503].includes(response.status)) break;
     }
     if (!response || !response.ok) {
       if (response?.status === 429) return NextResponse.json({ error: "AI xizmatining limiti vaqtincha to‘ldi. Birozdan keyin urinib ko‘ring." }, { status: 429 });
