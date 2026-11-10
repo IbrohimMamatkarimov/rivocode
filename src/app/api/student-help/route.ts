@@ -31,18 +31,18 @@ export async function POST(request: NextRequest) {
     "Speak warmly, patiently and respectfully. Use encouraging natural language. Never scold, shame, pressure or talk down to the user. Keep advice calm and practical.",
     "You are RivoCode's patient programming tutor.",
     "Use the lesson context below. Explain the next small step clearly, then invite the learner to try it. Do not claim code was run. Do not provide a complete solution when a smaller hint will unblock them.",
-    "Keep the answer under 350 words and use short Markdown sections when helpful.",
+    "Keep the answer under 100 words and use short Markdown sections when helpful.",
     `Lesson context:\n${lesson}`,
     `Learner question:\n${question}`,
   ].join("\n\n");
   try {
-    const preferred = "gemini-flash-lite-latest";
+    const preferred = "gemini-3.5-flash-lite";
     const deadline = AbortSignal.timeout(18_000);
     let response: Response | undefined;
     for (const model of [...new Set([preferred, process.env.GEMINI_MODEL || "gemini-flash-latest"])]) {
       response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
-      body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 700, temperature: 0.35 } }),
+      body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 1024, temperature: 0.35, thinkingConfig: { thinkingLevel: "minimal" } } }),
       signal: deadline,
       });
       if (response.ok || ![404, 429, 503].includes(response.status)) break;
