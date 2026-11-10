@@ -1,4 +1,3 @@
-import {CreatorTeam} from "@/components/CreatorTeam";
 import { StudioMotion } from "@/components/StudioMotion";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
@@ -46,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <StudioMotion />
         <ThemeProvider>
           <LanguageProvider>
-            <AuthProvider><LearningProgressProvider><CreatorTeam brand="RivoCode" accent="#126d77"/>{children}</LearningProgressProvider></AuthProvider>
+            <AuthProvider><LearningProgressProvider>{children}</LearningProgressProvider></AuthProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>
