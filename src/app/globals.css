@@ -716,3 +716,7 @@ html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white\/52 { color: rgba
 .rivo-tutor-panel button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 .rivo-tutor-panel audio{max-width:100%;height:36px}
 @media(max-width:640px){.rivo-tutor-panel{bottom:100px!important;right:12px!important;width:calc(100vw - 24px);max-height:calc(100dvh - 120px)!important}}
+
+/* Actionable controls use the same pointer affordance throughout RivoCode. */
+button:not(:disabled),[role=button]:not([aria-disabled=true]),a[href]{cursor:pointer}
+button:disabled{cursor:not-allowed}
