@@ -702,3 +702,17 @@ html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white\/52 { color: rgba
 
 /* Byte launcher: the character itself is the button — no banner or label. */
 .rivo-tutor-trigger{right:22px!important;bottom:22px!important;width:88px!important;height:88px!important;min-height:0!important;padding:0!important;display:grid!important;place-items:center!important;border:0!important;border-radius:50%!important;background:radial-gradient(circle,#d8ffff2e 0 43%,transparent 44%)!important;box-shadow:none!important;overflow:visible!important}.rivo-tutor-trigger .rivo-byte-art{width:84px!important;height:84px!important;filter:drop-shadow(0 10px 11px #00243a55)!important;transition:transform .22s ease,filter .22s ease}.rivo-tutor-trigger:hover .rivo-byte-art{transform:translateY(-5px) scale(1.06);filter:drop-shadow(0 14px 14px #00243a6b)!important}.rivo-tutor-trigger>span:not(.brand-mascot){display:none!important}.rivo-tutor-trigger::before{content:""!important;position:absolute!important;inset:8px!important;border:1px solid #68d7df55!important;border-radius:50%!important;pointer-events:none!important}.rivo-tutor-trigger::after{display:none!important}@media(max-width:640px){.rivo-tutor-trigger{right:12px!important;bottom:12px!important;width:76px!important;height:76px!important}.rivo-tutor-trigger .rivo-byte-art{width:73px!important;height:73px!important}}
+
+/* Keep the conversation scrollable while its input and controls stay reachable. */
+.rivo-tutor-panel{position:fixed;z-index:1000!important;top:auto!important;right:16px!important;bottom:112px!important;display:flex!important;flex-direction:column!important;max-height:calc(100dvh - 136px)!important;width:min(390px,calc(100vw - 32px));isolation:isolate;pointer-events:auto;overflow:hidden;touch-action:pan-y}
+.rivo-tutor-panel>header{flex-shrink:0;min-height:76px;align-items:center;position:relative;padding:12px 16px;gap:12px}
+.rivo-tutor-panel>header img{display:block;width:48px!important;height:48px!important;flex:none;object-fit:contain}
+.rivo-tutor-panel>header button{flex:none;min-width:40px;min-height:40px;display:grid;place-items:center;border-radius:12px;cursor:pointer}
+.rivo-tutor-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior-y:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+.rivo-tutor-panel>aside{flex-shrink:0;max-height:150px;overflow-y:auto}
+.rivo-tutor-panel>form,.rivo-tutor-panel>div:last-child{flex-shrink:0}
+.rivo-tutor-panel button{pointer-events:auto;touch-action:manipulation}
+.rivo-tutor-panel textarea{max-height:100px;min-height:64px}
+.rivo-tutor-panel button:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+.rivo-tutor-panel audio{max-width:100%;height:36px}
+@media(max-width:640px){.rivo-tutor-panel{bottom:100px!important;right:12px!important;width:calc(100vw - 24px);max-height:calc(100dvh - 120px)!important}}
