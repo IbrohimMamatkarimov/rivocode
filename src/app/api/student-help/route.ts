@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
       response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
       body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 700, temperature: 0.35 } }),
-      signal: AbortSignal.timeout(20_000),
+      signal: AbortSignal.timeout(3_000),
       });
       if (response.ok || ![404, 503].includes(response.status)) break;
     }
