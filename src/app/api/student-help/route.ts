@@ -7,12 +7,7 @@ const MAX_REQUESTS = 12;
 const hits = new Map<string, { count: number; resetAt: number }>();
 
 
-function offlineCodingHelp(question: string) {
-  const q = question.toLowerCase();
-  if (/(variable|const|let|var)/.test(q)) return "A variable is a named place for a value. Start with const when the value will not change: const score = 10. Use let only when you plan to assign a new value later. Try creating one variable for a name or score, then log it with console.log(...).";
-  if (/(error|bug|debug)/.test(q)) return "Debug one step at a time:\n\n1. Read the first error message exactly.\n2. Find the line number it names.\n3. Check spelling, brackets, quotes, and variable names.\n4. Add console.log(...) just before that line to inspect the value.\n\nShare the error and the smallest code sample, and I’ll help you narrow it down.";
-  return "Let’s make this smaller: tell me the language you are using, what you expected to happen, and what happened instead. I’ll help you choose the next coding step.";
-}
+
 
 function allowed(request: NextRequest) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
@@ -40,24 +35,24 @@ export async function POST(request: NextRequest) {
     `Learner question:\n${question}`,
   ].join("\n\n");
   try {
-    const preferred = process.env.GEMINI_MODEL || "gemini-flash-latest";
+    const preferred = "gemini-flash-lite-latest";
     let response: Response | undefined;
     for (const model of [...new Set([preferred, "gemini-flash-lite-latest"])]) {
       response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`, {
       method: "POST", headers: { "Content-Type": "application/json", "x-goog-api-key": process.env.GEMINI_API_KEY },
       body: JSON.stringify({ contents: [{ role: "user", parts: [{ text: prompt }] }], generationConfig: { maxOutputTokens: 700, temperature: 0.35 } }),
-      signal: AbortSignal.timeout(3_000),
+      signal: AbortSignal.timeout(18_000),
       });
       if (response.ok || ![404, 503].includes(response.status)) break;
     }
     if (!response || !response.ok) {
       if (response?.status === 429) return NextResponse.json({ error: "AI xizmatining limiti vaqtincha to‘ldi. Birozdan keyin urinib ko‘ring." }, { status: 429 });
-      return NextResponse.json({ answer: offlineCodingHelp(question), fallback: true });
+      return NextResponse.json({ error: "Could not get a reply. Please try again." }, { status: 503 });
     }
     const data = await response.json() as { candidates?: Array<{ content?: { parts?: Array<{ text?: string }> } }> };
     const answer = data.candidates?.[0]?.content?.parts?.map((part) => part.text || "").join("").trim();
-    if (!answer) return NextResponse.json({ answer: offlineCodingHelp(question), fallback: true });
+    if (!answer) return NextResponse.json({ error: "Could not get a reply. Please try again." }, { status: 503 });
     return NextResponse.json({ answer });
-  } catch { return NextResponse.json({ answer: offlineCodingHelp(question), fallback: true }); }
+  } catch { return NextResponse.json({ error: "Could not get a reply. Please try again." }, { status: 503 }); }
 }
 
