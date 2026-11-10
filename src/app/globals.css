@@ -720,3 +720,10 @@ html:not(.dark) .hero-surface:not(.dashboard-hero) .text-white\/52 { color: rgba
 /* Actionable controls use the same pointer affordance throughout RivoCode. */
 button:not(:disabled),[role=button]:not([aria-disabled=true]),a[href]{cursor:pointer}
 button:disabled{cursor:not-allowed}
+
+.rivo-tutor-panel{height:min(640px,calc(100dvh - 136px));}
+.rivo-tutor-body{overflow-y:auto!important;min-height:0!important;scrollbar-gutter:stable;cursor:grab;}
+.rivo-tutor-body:active{cursor:grabbing;}
+.rivo-tutor-body button,.rivo-tutor-body a{cursor:pointer;}
+.rivo-tutor-body textarea{cursor:text;}
+@media(max-width:640px){.rivo-tutor-panel{height:min(640px,calc(100dvh - 120px));}}
