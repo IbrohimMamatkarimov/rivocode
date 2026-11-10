@@ -1,4 +1,5 @@
 "use client";
+import {CreatorTeam} from "@/components/CreatorTeam";
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -57,6 +58,7 @@ export function Header({ onOpenMenu }: { onOpenMenu: () => void }) {
         </div>
       </div>
 
+<div className="creator-header-center"><CreatorTeam brand="RivoCode" accent="#126d77"/></div>
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="hidden items-center gap-1.5 rounded-full border border-warning/25 bg-warning-soft px-3 py-1.5 text-xs font-semibold text-warning sm:flex">
           <Flame className="h-3.5 w-3.5" fill="currentColor" />
